@@ -1,0 +1,147 @@
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: black;
+        }
+        
+        h1 {
+            font-family: 'Arial';
+            font-size: 3.7em;
+            text-align: center;
+            background: #000;
+            color: #000;
+            /*Use shadows to slowly build up the glow. The first shadow should be the colour of the text. Subsequent shadows are the colour you want the glow to be, all with no x or y offset and with increasing amounts of blur (the number of shadows you use depends on how big you want the glow to be).*/
+            text-shadow: 0 0 10px #fff, 0 0 20px #00aa00, 0 0 30px #00aa00, 0 0 40px #00aa00, 0 0 50px #00aa00, 0 0 60px #00aa00, 0 0 70px #00aa00;
+        }
+        /***********************
+    * TextBox      Styles *
+    ***********************/
+        
+        .flexsearch--wrapper {
+            height: auto;
+            width: auto;
+            max-width: 100%;
+            overflow: hidden;
+            background: transparent;
+            margin: 0;
+            position: static;
+        }
+        
+        .flexsearch--form {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .flexsearch--input-wrapper {
+            padding: 0 66px 0 0;
+            /* Right padding for submit button width */
+            overflow: hidden;
+        }
+        
+        .flexsearch--input {
+            width: 100%;
+        }
+        
+        .flexsearch {
+            position: absolute;
+            width: 95%;
+            bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+        }
+        
+        .flexsearch--input {
+            box-sizing: content-box;
+            height: 35px;
+            padding: 0 46px 0 10px;
+            border-color: #107710;
+            border-radius: 5px;
+            border-style: solid;
+            border-width: 1px;
+            margin-top: 15px;
+            color: #b2b2b2;
+            font-family: 'Arial';
+            font-size: 18px;
+            background-color: black;
+        }
+        
+        .flexsearch--submit {
+            position: absolute;
+            right: 0;
+            top: 0;
+            display: block;
+            width: 90px;
+            height: 35px;
+            padding: 0;
+            border: none;
+            margin-top: 16px;
+            margin-right: 8px;
+            background-color: #009900;
+            color: #000;
+            font-family: 'Arial';
+            font-weight: bold;
+            font-size: 17px;
+            line-height: 35px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .flexsearch--input:focus {
+            outline: none;
+        }
+        
+        .flexsearch--submit:hover {
+            background-color: #00bb00;
+            cursor: pointer;
+        }
+        
+         ::-webkit-input-placeholder {
+            color: #b2b2b2;
+            font-style: italic;
+        }
+        
+         ::-moz-placeholder {
+            /* Firefox 19+ */
+            color: #b2b2b2;
+        }
+        
+        #lstat {
+            position: absolute;
+            color: #107710;
+            line-height: 1px;
+            font-size: 13px;
+            font-style: oblique;
+        }
+        
+        #rstat {
+            position: absolute;
+            color: #107710;
+            line-height: 1px;
+            font-size: 13px;
+            font-style: oblique;
+            right: 2%;
+        }
+        
+        #msgcon {
+            font-family: 'Arial';
+            font-size: 3.2em;
+            color: #0e07dd;
+            font-weight: bold;
+            position: absolute;
+            height: 65%;
+            width: 100%;
+            display: table;
+        }
+        
+        #msg {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+        #footer {
+            padding: 5px 15% 0;
+        }
