@@ -1,3 +1,15 @@
+$.notify.addStyle('mystyle', {
+  html: "<span data-notify-text/>",
+  classes: {
+    base: {
+      "white-space": "nowrap",
+      "background-color": "black",
+	  "color": "white",
+      "padding": "5px"
+    }
+  }
+});
+
 var socketServer; 
 //socketServer = "http://127.0.0.1";
 socketServer = "https://dcnew.herokuapp.com";
@@ -24,6 +36,19 @@ socket.on('time',function(msg){
     serverTime = parseInt(msg); 
     //$(".spinner").hide(); 
     socket.emit('getInitChatState',{});
+});
+
+socket.on('cmd',function(msg){ 
+    let cmd = msg.cmd
+    let cmdData = msg.cmdData
+    switch (cmd) {
+        case 'rld':
+            $.notify('Site has been updated. Refreshing in 3 seconds!!!', {style: 'mystyle'});
+            setTimeout(function(){location.reload();}, 3000); 
+            break;
+        default:
+            break;
+    }
 });
 
 function updateTimeago(){
