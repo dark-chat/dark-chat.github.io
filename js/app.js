@@ -19,11 +19,17 @@ var receivedInit=false;
 var activePersonsCount=0;
 var onlinePersonsCount=0;
 var msgTime=0;
+var pulseInterval=0;
 
 setInterval(function(){
     if(serverTime==0)return;
     serverTime+=10000; 
     updateTimeago(); 
+    pulseInterval++;
+    if(pulseInterval>6){
+        pulseInterval=0;
+        socket.emit('pulse',{});
+    }
 },10000); 
 
 socket.on('connect', function(msg){console.log('Got connected!');}); 
