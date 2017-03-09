@@ -1,64 +1,42 @@
-@font-face {
-  font-family: 'myfont';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Fontdiner Swanky'), local('FontdinerSwanky'), url(https://fonts.gstatic.com/s/fontdinerswanky/v6/8_GxIO5ixMtn5P6COsF3Tsy4Bvmor6GKUp1XJvzweTE.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-
 html,
 body {
     margin: 0;
     height: 100%;
     overflow: hidden;
     background-color: black;
-    font-family: 'myfont', tahoma;
+    font-family: 'font114514', tahoma;
 }
 
 h1 {
-    font-family: 'myfont', tahoma;
-    font-size: 3.2em;
-    text-align: center;
-    background: #000;
+    font-family: 'font114514', tahoma;
+    font-size: 1.2em;
+    line-height: 200%;
     color: #000;
     /*Use shadows to slowly build up the glow. The first shadow should be the colour of the text. Subsequent shadows are the colour you want the glow to be, all with no x or y offset and with increasing amounts of blur (the number of shadows you use depends on how big you want the glow to be).*/
     text-shadow: 0 0 10px #fff, 0 0 20px #00aa00, 0 0 30px #00aa00, 0 0 40px #00aa00, 0 0 50px #00aa00, 0 0 60px #00aa00, 0 0 70px #00aa00;
 }
 
-
+#up {
+    height:15%;
+    text-align: center;
+    background: #000;
+}
+#down {
+    height:15%;
+}
 /***********************
     * TextBox      Styles *
     ***********************/
-
-.flexsearch--wrapper {
-    height: auto;
-    width: auto;
-    max-width: 100%;
-    overflow: hidden;
-    background: transparent;
-    margin: 0;
-    position: static;
-}
 
 .flexsearch--form {
     overflow: hidden;
     position: relative;
 }
 
-.flexsearch--input-wrapper {
-    padding: 0 66px 0 0;
-    /* Right padding for submit button width */
-    overflow: hidden;
-}
-
-.flexsearch--input {
-    width: 100%;
-}
-
 .flexsearch {
     position: absolute;
     width: 95%;
-    bottom: 10px;
+    bottom: 0;
     margin-left: auto;
     margin-right: auto;
     left: 0;
@@ -67,51 +45,36 @@ h1 {
 
 .flexsearch--input {
     box-sizing: content-box;
-    height: 35px;
-    padding: 0 46px 0 10px;
+    height: 25px;
     border-color: #107710;
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;
     margin-top: 15px;
     color: #b2b2b2;
-    font-family: 'myfont', tahoma;
-    font-size: 18px;
+    font-family: 'font114514', tahoma;
+    font-size: 0.6em;
     background-color: black;
-}
-
-.flexsearch--input {
-    box-sizing: content-box;
-    height: 35px;
-    padding: 0 46px 0 10px;
-    border-color: #107710;
-    border-radius: 5px;
-    border-style: solid;
-    border-width: 1px;
-    margin-top: 15px;
-    color: #b2b2b2;
-    font-family: 'myfont', tahoma;
-    font-size: 18px;
-    background-color: black;
+    width:95%;
 }
 
 .flexsearch--submit {
+    height: 29px;
+    width: 7em;
     position: absolute;
     right: 0;
     top: 0;
     display: block;
-    width: 90px;
-    height: 35px;
     padding: 0;
     border: none;
-    margin-top: 16px;
-    margin-right: 8px;
+    margin-top: 15px;
+    margin-right: 3%;
     background-color: #009900;
     color: #000;
-    font-family: 'myfont', tahoma;
+    font-family: 'font114514', tahoma;
     font-weight: bold;
-    font-size: 17px;
-    line-height: 35px;
+    /* font-size: 17px; */
+    /* line-height: 35px; */
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -127,7 +90,8 @@ h1 {
 
  ::-webkit-input-placeholder {
     color: #b2b2b2;
-    font-style: italic;
+    font-family: 'font91348';
+    font-style: oblique;
 }
 
  ::-moz-placeholder {
@@ -139,8 +103,8 @@ h1 {
     position: absolute;
     color: #107710;
     line-height: 1px;
-    font-size: 13px;
-    font-family: 'myfont';
+    font-size: 0.43em;
+    font-family: 'font91348';
     font-style: oblique;
 }
 
@@ -148,15 +112,15 @@ h1 {
     position: absolute;
     color: #107710;
     line-height: 1px;
-    font-size: 13px;
+    font-size: 0.43em;
     font-style: oblique;
-    font-family: 'myfont';
-    right: 2%;
+    font-family: 'font91348';
+    right: 3%;
 }
 
 #msgcon {
-    font-family: 'myfont', tahoma;
-    font-size: 3.5em;
+    font-family: 'font114514', tahoma;
+    font-size: 1.4em;
     color: white;
     position: absolute;
     height: 65%;
@@ -169,25 +133,24 @@ h1 {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-    
+    padding: 0 5%;
 }
 
 #footer {
-    padding: 10px 5px 0;
+    padding: 0.1em 0.1em 0;
 }
 
 #links {
     color: #107710;
-    font-family: 'myfont', tahoma;
-    font-size: 0.8em;
+    font-family: 'font114514', tahoma;
+    font-size: 0.5em;
     text-align: right;
-    left: 10px;
     bottom: 0;
     position: relative;
 }
 
 .flexsearch {
-    max-width: 1200px;
+    max-width: 87%;
 }
 
 /* Theme */
