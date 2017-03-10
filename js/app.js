@@ -25,7 +25,7 @@ var missedMessages = 0;
 var cachedMessage = '';
 
 setInterval(function(){
-    if(serverTime==0)return;
+    if(serverTime===0)return;
     serverTime+=10000; 
     updateTimeago(); 
     pulseInterval++;
@@ -73,20 +73,20 @@ socket.on('initChatState',function(msg){
 
 //function up(){$.ajax(socketServer+"/l");}up();setInterval(up,50000);
 socket.on('updateState',function(msg){
-    if(receivedInit==false)return;
+    if(receivedInit===false)return;
     fillData(msg);
 });
 
 /* --------- */
 
 function updateTimeago(){
-    if(receivedInit==false)return;
+    if(receivedInit===false)return;
     fillRstat(msgTime);
 }
 
 function fillData(msg){
-    if (msg['msg']&&msg['msgTime']&&msg['msg']!=cachedMessage){
-        cachedMessage=msg['msg'];
+    if (isDefined(msg.msg) && isDefined(msg.msgTime) && msg.msg!=cachedMessage){
+        cachedMessage=msg.msg;
         $('#msg').text(msg.msg);
         if (blurred){
             missedMessages++;
@@ -99,14 +99,17 @@ function fillData(msg){
     var newStats = false;
     var onP=onlinePersonsCount;
     var acP=activePersonsCount;
-    if (msg['onlinePersonsCount']){
+
+    if (isDefined(msg.onlinePersonsCount)){
         onP = msg.onlinePersonsCount;
         newStats = true;
     }
-    if (msg['activePersonsCount']){
+
+    if (isDefined(msg.activePersonsCount)){
         acP = msg.activePersonsCount;
         newStats = true;
     }
+
     if(newStats){
         var is_are1 = onP<2?" person is ":" persons are ";
         var is_are2 = acP<2?" is ":" are ";
@@ -118,6 +121,7 @@ function fillData(msg){
             $('#lstat').text("Noone is here. ");
         }
     }
+    
 }
 
 function fillRstat(time){
@@ -149,3 +153,7 @@ window.onfocus = function() {
     missedMessages=0;
     blurred = false;
 };
+
+function isDefined(val) {
+    return typeof val!=="undefined";
+}
