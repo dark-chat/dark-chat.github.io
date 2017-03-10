@@ -20,6 +20,9 @@ var activePersonsCount=0;
 var onlinePersonsCount=0;
 var msgTime=0;
 var pulseInterval=0;
+var blurred = false;
+var missedMessages = 0;
+var cachedMessage = '';
 
 setInterval(function(){
     if(serverTime==0)return;
@@ -32,9 +35,12 @@ setInterval(function(){
     }
 },10000); 
 
+/*  Socket Events */
+
 socket.on('connect', function(msg){console.log('Got connected!');}); 
 
 socket.on('disconnect', function(){
+    receivedInit=false;
     $('#lstat').text("Lost connection...");
 });
 
@@ -57,30 +63,35 @@ socket.on('cmd',function(msg){
     }
 });
 
-function updateTimeago(){
-    if(receivedInit==false)return;
-    fillRstat(msgTime);
-}
-
 socket.on('initChatState',function(msg){ 
     activePersonsCount = msg.activePersonsCount;
     onlinePersonsCount = msg.onlinePersonsCount;
     msgTime = msg.msgTime;
-    fillData(msg)
+    fillData(msg);
     receivedInit=true;
 });
 
 //function up(){$.ajax(socketServer+"/l");}up();setInterval(up,50000);
 socket.on('updateState',function(msg){
     if(receivedInit==false)return;
-    fillData(msg)
+    fillData(msg);
 });
 
+/* --------- */
+
+function updateTimeago(){
+    if(receivedInit==false)return;
+    fillRstat(msgTime);
+}
+
 function fillData(msg){
-    if (msg['msg']){
+    if (msg['msg']&&msg['msgTime']&&msg['msg']!=cachedMessage){
+        cachedMessage=msg['msg'];
         $('#msg').text(msg.msg);
-    }
-    if (msg['msg']&&msg['msgTime']){
+        if (blurred){
+            missedMessages++;
+            document.title = '('+missedMessages+') Dark Chat';
+        }
         msgTime = msg.msgTime;
         fillRstat(msg.msgTime);
     }
@@ -114,18 +125,27 @@ function fillRstat(time){
     $('#rstat').text("Said "+hTime+" ago");
 }
 
+function postMsg(msg){
+    socket.emit('post',{'msg':msg});
+    $( "#inputbox" ).val('');
+}
+
 $( "#inputbox" ).submit(function( event ) {
     postMsg($( "#inputbox" ).val());
-    $( "#inputbox" ).val('')
     return false;
 });
 
 $( "#inputbtn" ).click(function( event ) {
     postMsg($( "#inputbox" ).val());
-    $( "#inputbox" ).val('')
     return false;
 });
 
-function postMsg(msg){
-    socket.emit('post',{'msg':msg});
-}
+window.onblur = function() {
+    blurred = true;
+};
+
+window.onfocus = function() {
+    if (document.title != 'Dark Chat') document.title = 'Dark Chat';
+    missedMessages=0;
+    blurred = false;
+};
