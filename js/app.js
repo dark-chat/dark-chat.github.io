@@ -77,6 +77,12 @@ socket.on('updateState',function(msg){
     fillData(msg);
 });
 
+socket.on('stats',function(msg){
+    var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})}; r.sort(function(a, b){return a.freq-b.freq;});
+    var t=''; for(var c=r.length-1;c>=0;c--){ t=t+r[c].word+"("+r[c].freq+") " }
+    $("#statsFill").text( msg.msgCount + " Messages. Top words are " + t);
+});
+
 /* --------- */
 
 function updateTimeago(){
@@ -121,7 +127,7 @@ function fillData(msg){
             $('#lstat').text("Noone is here. ");
         }
     }
-    
+
 }
 
 function fillRstat(time){
