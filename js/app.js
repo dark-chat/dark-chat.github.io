@@ -137,9 +137,10 @@ function fillData(msg){
             $('#lstat').text( onP + is_are1 +"watching, of which "+acP+is_are2+"talking.");
         }else if(onP>0) {
             $('#lstat').text(onP + is_are1 +"watching.");
-        }else{
-            $('#lstat').text("Noone is here. ");
         }
+        // else{
+        //     $('#lstat').text("Noone is here. ");
+        // }
     }
 
 }
