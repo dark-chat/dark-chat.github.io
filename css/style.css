@@ -33,16 +33,35 @@ h1 {
     position: absolute;
     height: 65%;
     width: 100%;
-    display: table;
     text-shadow:rgb(64, 64, 255) 0px 0px 15px;
 }
 
-#msg {
-    display: table-cell;
+#msgcon span {
     vertical-align: middle;
     text-align: center;
     padding: 0 5%;
+    position: absolute;
+    left:0;
+    right:0;
+    top:50%;
+    margin:auto;
+    /* transition: transform 2s; */
+    transform:translate(0, -50%);
 }
+
+/*
+#msgcon span:last-child {
+    transform:translate(0, -50%) !important;
+}
+
+#msgcon span::nth-last-child(n+2) {
+    transform:translate(-100%, -50%) !important;
+}
+
+.rightMsg {
+    transform:translate(100%, -50%) !important;
+}
+*/
 
 /***********************
     * TextBox      Styles *

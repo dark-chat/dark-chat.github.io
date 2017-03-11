@@ -93,7 +93,21 @@ function updateTimeago(){
 function fillData(msg){
     if (isDefined(msg.msg) && isDefined(msg.msgTime) && msg.msg!=cachedMessage){
         cachedMessage=msg.msg;
-        $('#msg').text(msg.msg);
+        // $('.activeMsg').removeClass('activeMsg').addClass('leftMsg')
+        if($('.newMsg').length) {
+            var els = $('.newMsg');
+            $('.newMsg').removeClass('newMsg');
+            TweenMax.to(els, 1, {x:"-100%", ease:Power1.easeIn});
+        }
+        var el = $('<span>');
+        el.text(msg.msg);
+        $('#msgcon').append(el);
+        el.addClass("newMsg");
+        TweenMax.from(el, 1, {x:"100%", ease:Power1.easeOut})
+        // setTimeout(function(){
+        //     el.addClass('activeMsg');
+        // },0);
+        
         if (blurred){
             missedMessages++;
             document.title = '('+missedMessages+') Dark Chat';
