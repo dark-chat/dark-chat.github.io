@@ -37,6 +37,7 @@ h1 {
 }
 
 #msgcon span {
+    word-break: break-word;
     vertical-align: middle;
     text-align: center;
     padding: 0 5%;
