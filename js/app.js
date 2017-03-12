@@ -97,18 +97,24 @@ function fillData(msg){
         if($('.newMsg').length) {
             var els = $('.newMsg');
             $('.newMsg').removeClass('newMsg');
-            TweenMax.to(els, 1, {x:"-100%", ease:Power1.easeIn});
+            if(tweenNewMessages){
+                TweenMax.to(els, 1, {x:"-100%", ease:Power1.easeIn});
+            }
         }
         var el = $('<span>');
         el.text(msg.msg);
         $('#msgcon').append(el);
         el.addClass("newMsg");
-        TweenMax.from(el, 1, {x:"100%", ease:Power1.easeOut})
+        if(tweenNewMessages){
+            TweenMax.from(el, 1, {x:"100%", ease:Power1.easeOut})
+        }else{
+            TweenMax.set(el, {x:"100%"});
+        }
         // setTimeout(function(){
         //     el.addClass('activeMsg');
         // },0);
         
-        if (blurred){
+        if (blurred || tweenNewMessages==false){
             missedMessages++;
             document.title = '('+missedMessages+') Dark Chat';
         }
@@ -177,4 +183,60 @@ window.onfocus = function() {
 
 function isDefined(val) {
     return typeof val!=="undefined";
+}
+
+var tweenNewMessages = true;
+var resetCycleMsgTimer;
+var activeMsg=null;
+
+$(document).keydown(function(e) {
+    //if($('.newMsg').length===0) return;
+    if (activeMsg===null || tweenNewMessages==true) {
+        $('.head').removeClass('head');
+        activeMsg = $('#msgcon span:last-child');
+        activeMsg.addClass('head');
+    }
+
+    switch(e.which) {
+        case 37: // left
+            if(activeMsg.prev().length){
+                tweenNewMessages = false;
+                moveRight(activeMsg);
+                $('.head').removeClass('head');
+                activeMsg = activeMsg.prev();
+                activeMsg.addClass('head');
+                moveCenter(activeMsg);
+            }
+        break;
+
+        case 39: // right
+            if(activeMsg.next().length){
+                tweenNewMessages = false;
+                moveLeft(activeMsg);
+                $('.head').removeClass('head');
+                activeMsg = activeMsg.next();
+                activeMsg.addClass('head');
+                moveCenter(activeMsg);
+                if( $('.newMsg:last-child').is(activeMsg) ) {
+                    tweenNewMessages = true;
+                    if (document.title != 'Dark Chat') document.title = 'Dark Chat';
+                }
+            }
+        break;
+
+        default: return;
+    }
+    e.preventDefault();
+});
+
+function moveLeft(el) {
+    TweenMax.to(el, 1, {x:"-100%", ease:Power0.easeNone});
+}
+
+function moveRight(el) {
+    TweenMax.to(el, 1, {x:"100%", ease:Power0.easeNone});
+}
+
+function moveCenter(el) {
+    TweenMax.to(el, 1, {x:"0%", ease:Power0.easeNone});
 }
