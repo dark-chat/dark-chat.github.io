@@ -176,7 +176,7 @@ function isDefined(val) {
 var tweenNewMessages = true;
 var activeMsg=null;
 
-$(document).keydown(function(e) {
+function rollMsgs(dir){
     //if($('.newMsg').length===0) return;
     if (activeMsg===null || tweenNewMessages==true) {
         $('.head').removeClass('head');
@@ -184,31 +184,53 @@ $(document).keydown(function(e) {
         activeMsg.addClass('head');
     }
 
+    if(dir==='right'){
+        if(activeMsg.next().length){
+            tweenNewMessages = false;
+            rollLeft(activeMsg);
+            $('.head').removeClass('head');
+            activeMsg = activeMsg.next();
+            activeMsg.addClass('head');
+            rollCenter(activeMsg);
+            if( $('.newMsg:last-child').is(activeMsg) ) {
+                tweenNewMessages = true;
+                if (document.title != 'Dark Chat') document.title = 'Dark Chat';
+            }
+        }
+    }
+
+    if(dir==='left'){
+        if(activeMsg.prev().length){
+            tweenNewMessages = false;
+            rollRight(activeMsg);
+            $('.head').removeClass('head');
+            activeMsg = activeMsg.prev();
+            activeMsg.addClass('head');
+            rollCenter(activeMsg);
+        }
+    }
+}
+
+function rollLeft(el) {
+    TweenMax.to(el, 1, {x:"-100%", ease:Power0.easeNone});
+}
+
+function rollRight(el) {
+    TweenMax.to(el, 1, {x:"100%", ease:Power0.easeNone});
+}
+
+function rollCenter(el) {
+    TweenMax.to(el, 1, {x:"0%", ease:Power0.easeNone});
+}
+
+$(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
-            if(activeMsg.prev().length){
-                tweenNewMessages = false;
-                moveRight(activeMsg);
-                $('.head').removeClass('head');
-                activeMsg = activeMsg.prev();
-                activeMsg.addClass('head');
-                moveCenter(activeMsg);
-            }
+            rollMsgs('left');
         break;
-
+        
         case 39: // right
-            if(activeMsg.next().length){
-                tweenNewMessages = false;
-                moveLeft(activeMsg);
-                $('.head').removeClass('head');
-                activeMsg = activeMsg.next();
-                activeMsg.addClass('head');
-                moveCenter(activeMsg);
-                if( $('.newMsg:last-child').is(activeMsg) ) {
-                    tweenNewMessages = true;
-                    if (document.title != 'Dark Chat') document.title = 'Dark Chat';
-                }
-            }
+            rollMsgs('right');
         break;
 
         default: return;
@@ -216,15 +238,6 @@ $(document).keydown(function(e) {
     e.preventDefault();
 });
 
-function moveLeft(el) {
-    TweenMax.to(el, 1, {x:"-100%", ease:Power0.easeNone});
-}
+Hammer($("#msgcon")[0]).on("swipeleft", function() {rollMsgs('right');});
 
-function moveRight(el) {
-    TweenMax.to(el, 1, {x:"100%", ease:Power0.easeNone});
-}
-
-function moveCenter(el) {
-    TweenMax.to(el, 1, {x:"0%", ease:Power0.easeNone});
-}
-
+Hammer($("#msgcon")[0]).on("swiperight", function() {rollMsgs('left');});
