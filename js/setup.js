@@ -43,3 +43,15 @@ $('body').flowtype({
    maxFont   : 40,
    fontRatio : 25
 });
+
+$.notify.addStyle('mystyle', {
+  html: "<span data-notify-text/>",
+  classes: {
+    base: {
+      "white-space": "nowrap",
+      "background-color": "black",
+	  "color": "white",
+      "padding": "5px"
+    }
+  }
+});

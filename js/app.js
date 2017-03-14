@@ -1,15 +1,3 @@
-$.notify.addStyle('mystyle', {
-  html: "<span data-notify-text/>",
-  classes: {
-    base: {
-      "white-space": "nowrap",
-      "background-color": "black",
-	  "color": "white",
-      "padding": "5px"
-    }
-  }
-});
-
 var socketServer; 
 //socketServer = "http://127.0.0.1";
 socketServer = "https://dcnew.herokuapp.com";
@@ -186,7 +174,6 @@ function isDefined(val) {
 }
 
 var tweenNewMessages = true;
-var resetCycleMsgTimer;
 var activeMsg=null;
 
 $(document).keydown(function(e) {
@@ -240,3 +227,4 @@ function moveRight(el) {
 function moveCenter(el) {
     TweenMax.to(el, 1, {x:"0%", ease:Power0.easeNone});
 }
+
