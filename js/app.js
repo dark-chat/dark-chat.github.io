@@ -12,6 +12,11 @@ setInterval(function(){
     if (socket_got_connected){
         socket.emit('init',{});
         socket_got_connected=false;
+        getInit();
+    }
+    if(initObj!==null){
+        initApp(initObj);
+        initObj=null;
     }
 },10);
 
@@ -29,8 +34,9 @@ setInterval(function(){
 /*  Socket Events */
 
 socket.on('disconnect', function(){
-    receivedInit=false;
     $('#lstat').text("Lost connection...");
+    receivedInit=false;
+    getInit();
 });
 
 socket.on('cmd',function(msg){ 
@@ -46,16 +52,6 @@ socket.on('cmd',function(msg){
     }
 });
 
-socket.on('init',function(msg){
-    serverTime = parseInt(msg.time);
-    activePersonsCount = msg.initChatState.activePersonsCount;
-    onlinePersonsCount = msg.initChatState.onlinePersonsCount;
-    msgTime = msg.initChatState.msgTime;
-    fillData(msg.initChatState);
-    showStats(msg.stats);
-    receivedInit=true;
-});
-
 //function up(){$.ajax(socketServer+"/l");}up();setInterval(up,50000);
 socket.on('updateState',function(msg){
     if(receivedInit===false)return;
@@ -68,6 +64,16 @@ socket.on('stats',function(msg){
 
 /* --------- */
 
+function initApp(msg){
+    serverTime = parseInt(msg.time);
+    activePersonsCount = msg.initChatState.activePersonsCount;
+    onlinePersonsCount = msg.initChatState.onlinePersonsCount;
+    msgTime = msg.initChatState.msgTime;
+    fillData(msg.initChatState);
+    showStats(msg.stats);
+    receivedInit=true;
+}
+
 function updateTimeago(){
     if(receivedInit===false)return;
     fillRstat(msgTime);
@@ -77,6 +83,7 @@ function showStats(msg){
     var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})}; r.sort(function(a, b){return a.freq-b.freq;});
     var t=''; for(var c=r.length-1;c>=0;c--){ t=t+r[c].word+"("+r[c].freq+") " }
     $("#statsFill").text( msg.msgCount + " Messages. Top words are " + t);
+    TweenMax.to("#statsFill", 0.5, {alpha:1});
 }
 
 function fillData(msg){

@@ -178,6 +178,10 @@ h1 {
     font-family: 'font95193';
 }
 
+#statsFill {
+    opacity: 0;
+}
+
 /* Theme */
 
 #links {
