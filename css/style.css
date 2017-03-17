@@ -29,7 +29,7 @@ h1 {
 #msgcon {
     font-family: 'font95191', tahoma;
     font-size: 1.6em;
-    color: white;
+    color: rgb(128, 128, 128);
     position: absolute;
     height: 65%;
     width: 100%;
@@ -48,6 +48,7 @@ h1 {
     margin:auto;
     /* transition: transform 2s; */
     transform:translate(0, -50%);
+    user-select: text;
 }
 
 /*
@@ -120,7 +121,7 @@ h1 {
 }
 
 .flexsearch--input {
-    color: #fff;
+    color: rgb(128, 128, 128);
 }
 
 .flexsearch--input:focus {
@@ -162,8 +163,8 @@ h1 {
 
 #links {
     color: #107710;
-    font-family: 'font95193', tahoma;
-    font-size: 0.5em;
+    font-family: 'font114514', tahoma;
+    font-size: 0.4em;
     text-align: right;
     bottom: 0;
     position: relative;
@@ -176,13 +177,71 @@ h1 {
 #stats {
     padding: 0.1em 0.1em 0;
     font-family: 'font95193';
+    text-align: center;
 }
 
 #statsFill {
     opacity: 0;
 }
 
+.default {
+    color: rgb(128, 128, 128);
+}
+
+.indy {
+    color:#6060ff;
+}
+
+.tori {
+    color:white;
+}
+
+.lacy {
+    color:#00a0a0;
+    text-shadow:-0.3ex -0.2ex 0.5ex #ff0080";
+}
+
+.greenie {
+    color:#408040;
+    text-shadow:0.0ex 0.0ex 0.4ex #0000ff";
+}
+
+.nimda {
+    color:orange;
+    text-shadow:0.0ex 0.0ex 0.4ex orangered;
+}
+
+.john {
+    color:brown;
+}
+
+#colors span {
+    cursor: pointer;
+    padding-right: 0.3em;
+}
+
+#colors span:hover {
+    font-size: 1.1em;
+    border: white solid 1px;
+    border-radius: 3px;
+}
+
+#colors span:hover {
+    font-size: 1.1em;
+    border: white solid 1px;
+    border-radius: 3px;
+}
+
+@keyframes fadeIn { 
+  from { opacity: 0; } 
+}
+
+.animate-flicker {
+    animation: fadeIn 0.5s infinite alternate;
+}
+
 /* Theme */
+
 
 #links {
     color: #abab2d;

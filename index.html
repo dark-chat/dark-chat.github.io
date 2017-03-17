@@ -22,7 +22,7 @@
     <div id="msgcon"></div>
     <div id="down">
         <div class="flexsearch">
-            <span id="lstat">Connecting...</span>
+            <span id="lstat"><span class="animate-flicker">Connecting...</span></span>
             <span id="rstat"></span>
             <form class="flexsearch--form" action="#" method="post">
                 <input id="inputbox" class="flexsearch--input" type="text" placeholder="Write here...">
@@ -30,9 +30,9 @@
             </form>
             <div id="stats">
                 <span id="links">
-                    Stats: <span id="statsFill"></span>
+                    Your color: <span id="colors"><span class="default">Default</span> <span class="indy">Indy</span> <span class="tori">Tori</span> <span class="lacy">Lacy</span> <span class="greenie">Greenie</span> <span class="nimda">Nimda</span> <span class="john">John</span></span>
                     <br />
-                    Your color: 
+                    Stats: <span id="statsFill"></span>
                 </span>
             </div>
         </div>
@@ -58,6 +58,9 @@
         var socket_got_connected = false;
         socket.on('connect', function(msg){socket_got_connected=true; console.log('Got connected!');});
         
+        $(document).ready(function() {
+            $('#inputbox').focus();
+        });
     </script>
     <script src="js/moment.min.js"></script>
     <script src="js/notify.min.js"></script>

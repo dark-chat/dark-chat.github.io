@@ -50,8 +50,9 @@ $.notify.addStyle('mystyle', {
     base: {
       "white-space": "nowrap",
       "background-color": "black",
-	  "color": "white",
-      "padding": "5px"
+	    "color": "white",
+      "padding": "5px",
+      "font-size": "0.63em"
     }
   }
 });

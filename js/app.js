@@ -34,7 +34,7 @@ setInterval(function(){
 /*  Socket Events */
 
 socket.on('disconnect', function(){
-    $('#lstat').text("Lost connection...");
+    $('#lstat').html('<span class="animate-flicker">Lost connection, reconnecting...</span>');
     receivedInit=false;
     getInit();
 });
@@ -46,6 +46,9 @@ socket.on('cmd',function(msg){
         case 'rld':
             $.notify('Site has been updated. Refreshing in 3 seconds!!!', {style: 'mystyle'});
             setTimeout(function(){location.reload();}, 3000); 
+            break;
+        case 'ntf':
+            $.notify(cmdData, {style: 'mystyle'});
             break;
         default:
             break;
@@ -95,18 +98,19 @@ function fillData(msg){
             var els = $('.newMsg');
             $('.newMsg').removeClass('newMsg');
             if(tweenNewMessages){
-                TweenMax.to(els, 1, {x:"-100%", ease:Power1.easeIn});
+                TweenMax.to(els, 0.5, {x:"-100%", ease:Power0.easeNone});
             }
         }
         var el = $('<span>');
         el.text(msg.msg);
+        if (isDefined(msg.msgColor)) el.addClass(msg.msgColor);
         $('#msgcon').append(el);
         el.addClass("newMsg");
         if(tweenNewMessages && receivedInit){
-            TweenMax.from(el, 1, {x:"100%", ease:Power1.easeOut})
+            TweenMax.from(el, 0.5, {x:"100%", ease:Power0.easeNone})
         } else if (tweenNewMessages) {
             TweenMax.set(el, {x:"0%"});
-            TweenMax.from(el, 0.5, {alpha:0, ease:Power1.easeOut})
+            TweenMax.from(el, 0.5, {alpha:0, ease:Power0.easeNone})
         } else {
             TweenMax.set(el, {x:"100%"});
         }
@@ -157,6 +161,9 @@ function fillRstat(time){
 }
 
 function postMsg(msg){
+    if(!socket.connected) notConnected();
+
+    while($('.head').next().length){rollMsgs('right');}
     socket.emit('post',{'msg':msg});
     $( "#inputbox" ).val('');
 }
@@ -224,15 +231,15 @@ function rollMsgs(dir){
 }
 
 function rollLeft(el) {
-    TweenMax.to(el, 1, {x:"-100%", ease:Power0.easeNone});
+    TweenMax.to(el, 0.5, {x:"-100%", ease:Power0.easeNone});
 }
 
 function rollRight(el) {
-    TweenMax.to(el, 1, {x:"100%", ease:Power0.easeNone});
+    TweenMax.to(el, 0.5, {x:"100%", ease:Power0.easeNone});
 }
 
 function rollCenter(el) {
-    TweenMax.to(el, 1, {x:"0%", ease:Power0.easeNone});
+    TweenMax.to(el, 0.5, {x:"0%", ease:Power0.easeNone});
 }
 
 $(document).keydown(function(e) {
@@ -250,6 +257,23 @@ $(document).keydown(function(e) {
     e.preventDefault();
 });
 
-Hammer($("#msgcon")[0]).on("swipeleft", function() {rollMsgs('right');});
+function is_touch_device() {
+  return 'ontouchstart' in window ||       // works on most browsers 
+      navigator.maxTouchPoints;       // works on IE10/11 and Surface
+};
 
-Hammer($("#msgcon")[0]).on("swiperight", function() {rollMsgs('left');});
+if(is_touch_device()){
+    Hammer($("#msgcon")[0]).on("swipeleft", function() {rollMsgs('right');});
+    Hammer($("#msgcon")[0]).on("swiperight", function() {rollMsgs('left');});
+}
+
+$('#colors span').on('click', function(){
+    if(!socket.connected) notConnected();
+    //console.log($(this).attr('class'));
+    var chosenColor = $(this).attr('class');
+    socket.emit('color',{"color":chosenColor});
+})
+
+function notConnected(){
+    $.notify('Still connecting...', {style: 'mystyle'});
+}
