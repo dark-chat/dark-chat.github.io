@@ -119,6 +119,10 @@ h1 {
     border-bottom-right-radius: 5px;
 }
 
+.flexsearch--input {
+    color: #fff;
+}
+
 .flexsearch--input:focus {
     outline: none;
 }
@@ -129,14 +133,12 @@ h1 {
 }
 
  ::-webkit-input-placeholder {
-    color: #b2b2b2;
-    font-family: 'font91348';
-    font-style: oblique;
+    color: #6c6c6c;
 }
 
  ::-moz-placeholder {
     /* Firefox 19+ */
-    color: #b2b2b2;
+    color: #6c6c6c;
 }
 
 #lstat {

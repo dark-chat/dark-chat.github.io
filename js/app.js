@@ -1,7 +1,3 @@
-var socketServer; 
-//socketServer = "http://127.0.0.1";
-socketServer = "https://dcnew.herokuapp.com";
-var socket = io.connect(socketServer);
 var serverTime = 0;
 var receivedInit=false;
 var activePersonsCount=0;
@@ -11,6 +7,13 @@ var pulseInterval=0;
 var blurred = false;
 var missedMessages = 0;
 var cachedMessage = '';
+
+setInterval(function(){
+    if (socket_got_connected){
+        socket.emit('init',{});
+        socket_got_connected=false;
+    }
+},10);
 
 setInterval(function(){
     if(serverTime===0)return;
@@ -25,17 +28,9 @@ setInterval(function(){
 
 /*  Socket Events */
 
-socket.on('connect', function(msg){console.log('Got connected!');}); 
-
 socket.on('disconnect', function(){
     receivedInit=false;
     $('#lstat').text("Lost connection...");
-});
-
-socket.on('time',function(msg){ 
-    serverTime = parseInt(msg); 
-    //$(".spinner").hide(); 
-    socket.emit('getInitChatState',{});
 });
 
 socket.on('cmd',function(msg){ 
@@ -51,11 +46,13 @@ socket.on('cmd',function(msg){
     }
 });
 
-socket.on('initChatState',function(msg){ 
-    activePersonsCount = msg.activePersonsCount;
-    onlinePersonsCount = msg.onlinePersonsCount;
-    msgTime = msg.msgTime;
-    fillData(msg);
+socket.on('init',function(msg){
+    serverTime = parseInt(msg.time);
+    activePersonsCount = msg.initChatState.activePersonsCount;
+    onlinePersonsCount = msg.initChatState.onlinePersonsCount;
+    msgTime = msg.initChatState.msgTime;
+    fillData(msg.initChatState);
+    showStats(msg.stats);
     receivedInit=true;
 });
 
@@ -66,9 +63,7 @@ socket.on('updateState',function(msg){
 });
 
 socket.on('stats',function(msg){
-    var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})}; r.sort(function(a, b){return a.freq-b.freq;});
-    var t=''; for(var c=r.length-1;c>=0;c--){ t=t+r[c].word+"("+r[c].freq+") " }
-    $("#statsFill").text( msg.msgCount + " Messages. Top words are " + t);
+    showStats(msg);
 });
 
 /* --------- */
@@ -78,11 +73,18 @@ function updateTimeago(){
     fillRstat(msgTime);
 }
 
+function showStats(msg){
+    var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})}; r.sort(function(a, b){return a.freq-b.freq;});
+    var t=''; for(var c=r.length-1;c>=0;c--){ t=t+r[c].word+"("+r[c].freq+") " }
+    $("#statsFill").text( msg.msgCount + " Messages. Top words are " + t);
+}
+
 function fillData(msg){
     if (isDefined(msg.msg) && isDefined(msg.msgTime) && msg.msg!=cachedMessage){
         cachedMessage=msg.msg;
         // $('.activeMsg').removeClass('activeMsg').addClass('leftMsg')
         if($('.newMsg').length) {
+            // move away current message
             var els = $('.newMsg');
             $('.newMsg').removeClass('newMsg');
             if(tweenNewMessages){
@@ -93,16 +95,19 @@ function fillData(msg){
         el.text(msg.msg);
         $('#msgcon').append(el);
         el.addClass("newMsg");
-        if(tweenNewMessages){
+        if(tweenNewMessages && receivedInit){
             TweenMax.from(el, 1, {x:"100%", ease:Power1.easeOut})
-        }else{
+        } else if (tweenNewMessages) {
+            TweenMax.set(el, {x:"0%"});
+            TweenMax.from(el, 0.5, {alpha:0, ease:Power1.easeOut})
+        } else {
             TweenMax.set(el, {x:"100%"});
         }
         // setTimeout(function(){
         //     el.addClass('activeMsg');
         // },0);
         
-        if (blurred || tweenNewMessages==false){
+        if (blurred || tweenNewMessages===false){
             missedMessages++;
             document.title = '('+missedMessages+') Dark Chat';
         }
