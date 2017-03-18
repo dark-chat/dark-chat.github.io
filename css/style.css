@@ -5,6 +5,7 @@ body {
     overflow: hidden;
     background-color: black;
     font-family: 'font114514', tahoma;
+    opacity: 0;
 }
 
 h1 {
@@ -86,7 +87,7 @@ h1 {
 
 .flexsearch--input {
     box-sizing: content-box;
-    height: 25px;
+    height: 30px;
     border-color: #107710;
     border-radius: 5px;
     border-style: solid;
@@ -100,7 +101,7 @@ h1 {
 }
 
 .flexsearch--submit {
-    height: 29px;
+    height: 34px;
     width: 7em;
     position: absolute;
     right: 0;
@@ -166,19 +167,14 @@ h1 {
 #links {
     color: #464640;
     font-family: 'font114514', tahoma;
-    font-size: 0.5em;
+    font-size: 0.48em;
     bottom: 0;
     position: relative;
-}
-
-.flexsearch {
-    max-width: 87%;
 }
 
 #stats {
     padding: 0.1em 0.1em 0;
     font-family: 'font95193';
-    text-align: center;
 }
 
 #statsFill {
