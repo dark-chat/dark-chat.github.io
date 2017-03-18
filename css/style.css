@@ -69,12 +69,12 @@ h1 {
     * TextBox      Styles *
     ***********************/
 
-.flexsearch--form {
+#inputform {
     overflow: hidden;
     position: relative;
 }
 
-.flexsearch {
+#submitcon {
     position: absolute;
     width: 95%;
     bottom: 0;
@@ -84,7 +84,7 @@ h1 {
     right: 0;
 }
 
-.flexsearch--input {
+#inputbox {
     box-sizing: content-box;
     height: 1.5em;
     border-color: #107710;
@@ -97,15 +97,12 @@ h1 {
     font-size: 0.6em;
     background-color: black;
     width:99%;
-}
-
-.flexsearch--input {
     color: rgb(128, 128, 128);
     padding-left: 0.15em;
     font-size: 0.5em;
 }
 
-.flexsearch--input:focus {
+#inputbox:focus {
     outline: none;
 }
 
@@ -226,7 +223,7 @@ h1 {
 
 /* Theme */
 
-.flexsearch--input {
+#inputbox {
     border-color: #b7b74d;
 }
 

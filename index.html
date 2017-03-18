@@ -14,11 +14,12 @@
     <div id="up"><h1>Chat In The Dark!</h1></div>
     <div id="msgcon"></div>
     <div id="down">
-        <div class="flexsearch">
+        <div id="submitcon">
             <span id="lstat"><span class="animate-flicker">Connecting...</span></span>
             <span id="rstat"></span>
-            <form class="flexsearch--form" action="#" method="post">
-                <input id="inputbox" class="flexsearch--input" type="text" placeholder="Write here...">
+            <form id="inputform" action="" method="post">
+                <input autocomplete="off" tabindex="1" id="inputbox" type="text" placeholder="Write here...">
+                <input type="submit" style="position: absolute;visibility: hidden;">
             </form>
             <div id="stats">
                 <span id="links">

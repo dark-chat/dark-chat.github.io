@@ -177,7 +177,7 @@ function postMsg(msg){
     $( "#inputbox" ).val('');
 }
 
-$( "#inputbox" ).submit(function( event ) {
+$( "#inputform" ).submit(function( event ) {
     postMsg($( "#inputbox" ).val());
     return false;
 });
