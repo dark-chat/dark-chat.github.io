@@ -30,9 +30,9 @@
             </form>
             <div id="stats">
                 <span id="links">
-                    Your color: <span id="colors"><span class="default">Default</span> <span class="indy">Indy</span> <span class="tori">Tori</span> <span class="lacy">Lacy</span> <span class="greenie">Greenie</span> <span class="nimda">Nimda</span> <span class="john">John</span></span>
+                    <span>Pick a color: <span id="colors"><span class="default">Default</span> <span class="indy">Indy</span> <span class="tori">Tori</span> <span class="lacy">Lacy</span> <span class="greenie">Greenie</span> <span class="nimda">Nimda</span> <span class="john">John</span> <span class="blue">Blue</span> <span class="jack">Jack</span> <span class="kat">Kat</span> <span class="alex">Alex</span></span></span>
                     <br />
-                    Stats: <span id="statsFill"></span>
+                    <span id="statsFill"></span>
                 </span>
             </div>
         </div>
@@ -42,8 +42,8 @@
     <script>
         var socketServer; 
         var initObj=null;
-        //socketServer = "http://127.0.0.1";
         socketServer = "https://dcnew.herokuapp.com";
+        //socketServer = "http://127.0.0.1";
         
         function getInit(){
             $.getJSON(socketServer + '/init',function(msg){

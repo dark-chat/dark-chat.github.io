@@ -10,7 +10,14 @@ var cachedMessage = '';
 
 setInterval(function(){
     if (socket_got_connected){
-        socket.emit('init',{});
+        var initOptions;
+        if (typeof window.localStorage!=="undefined" && localStorage.getItem('init')!==null) {
+            initOptions = localStorage.getItem('init');
+        }else{
+            initOptions = '';
+        }
+        //socket.emit('init', initOptions);
+        socket.emit('init', initOptions);
         socket_got_connected=false;
         getInit();
     }
@@ -85,7 +92,7 @@ function updateTimeago(){
 function showStats(msg){
     var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})}; r.sort(function(a, b){return a.freq-b.freq;});
     var t=''; for(var c=r.length-1;c>=0;c--){ t=t+r[c].word+"("+r[c].freq+") " }
-    $("#statsFill").text( msg.msgCount + " Messages. Top words are " + t);
+    $("#statsFill").text( msg.msgCount + " Messages. Top words: " + t);
     TweenMax.to("#statsFill", 0.5, {alpha:1});
 }
 

@@ -215,6 +215,25 @@ h1 {
     color:brown;
 }
 
+.blue {
+    color:blue;
+    text-shadow:0.0ex 0.0ex 0.4ex darkblue;
+}
+
+.jack {
+    color:green;
+    text-shadow:0.0ex 0.0ex 0.4ex darkgreen;
+}
+
+.kat {
+    color:deeppink;
+}
+
+.alex {
+    color:blueviolet;
+    text-shadow:0.0ex 0.0ex 0.4ex darkviolet;
+}
+
 #colors span {
     cursor: pointer;
     padding-right: 0.3em;
