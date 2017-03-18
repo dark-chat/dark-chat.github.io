@@ -4,12 +4,11 @@ body {
     height: 100%;
     overflow: hidden;
     background-color: black;
-    font-family: 'font114514', tahoma;
+    font-family: Lato, Helvatica, Arial;
     opacity: 0;
 }
 
 h1 {
-    font-family: 'font95191', tahoma;
     font-size: 1.2em;
     line-height: 200%;
     color: #000;
@@ -28,8 +27,8 @@ h1 {
 }
 
 #msgcon {
-    font-family: 'font95191', tahoma;
     font-size: 1.6em;
+    font-weight: bold;
     color: rgb(128, 128, 128);
     position: absolute;
     height: 65%;
@@ -94,7 +93,6 @@ h1 {
     border-width: 1px;
     margin-top: 15px;
     color: #b2b2b2;
-    font-family: 'font114514', tahoma;
     font-size: 0.6em;
     background-color: black;
     width:95%;
@@ -113,7 +111,6 @@ h1 {
     margin-right: 3%;
     background-color: #009900;
     color: #000;
-    font-family: 'font114514', tahoma;
     font-weight: bold;
     /* font-size: 17px; */
     /* line-height: 35px; */
@@ -150,7 +147,6 @@ h1 {
     color: #107710;
     line-height: 1px;
     font-size: 0.43em;
-    font-family: 'font91348';
     font-style: oblique;
 }
 
@@ -160,13 +156,11 @@ h1 {
     line-height: 1px;
     font-size: 0.43em;
     font-style: oblique;
-    font-family: 'font91348';
     right: 3%;
 }
 
 #links {
     color: #464640;
-    font-family: 'font114514', tahoma;
     font-size: 0.48em;
     bottom: 0;
     position: relative;
@@ -174,7 +168,8 @@ h1 {
 
 #stats {
     padding: 0.1em 0.1em 0;
-    font-family: 'font95193';
+    line-height: 0.7em;
+    padding-bottom: 0.3em;
 }
 
 #statsFill {
