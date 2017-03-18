@@ -182,11 +182,6 @@ $( "#inputbox" ).submit(function( event ) {
     return false;
 });
 
-$( "#inputbtn" ).click(function( event ) {
-    postMsg($( "#inputbox" ).val());
-    return false;
-});
-
 window.onblur = function() {
     blurred = true;
 };

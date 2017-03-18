@@ -19,13 +19,12 @@
             <span id="rstat"></span>
             <form class="flexsearch--form" action="#" method="post">
                 <input id="inputbox" class="flexsearch--input" type="text" placeholder="Write here...">
-                <input id="inputbtn" class="flexsearch--submit" type="submit" value="Send" />
             </form>
             <div id="stats">
                 <span id="links">
                     <span id="statsFill">.</span>
                     <br />
-                    <span>Choose a color: <span id="colors"><span class="default">Default</span> <span class="indy">Indy</span> <span class="tori">Tori</span> <span class="lacy">Lacy</span> <span class="greenie">Greenie</span> <span class="nimda">Nimda</span> <span class="john">John</span> <span class="blue">Blue</span> <span class="jack">Jack</span> <span class="kat">Kat</span> <span class="alex">Alex</span></span></span>
+                    <span>Choose a color: <span id="colors"><span class="default">Default</span> <span class="indy">Cyan</span> <span class="tori">White</span> <span class="lacy">Persian</span> <span class="greenie">Goblin</span> <span class="nimda">Orange</span> <span class="john">Brown</span> <span class="blue">Blue</span> <span class="jack">Green</span> <span class="kat">Pink</span> <span class="alex">Java</span></span></span>
                 </span>
             </div>
         </div>
@@ -58,6 +57,13 @@
         
         $(document).ready(function() {
             $('#inputbox').focus();
+        });
+
+        $('input,textarea').focus(function(){
+        $(this).data('placeholder',$(this).attr('placeholder'))
+                .attr('placeholder','');
+        }).blur(function(){
+        $(this).attr('placeholder',$(this).data('placeholder'));
         });
     </script>
     <script src="js/moment.min.js"></script>
