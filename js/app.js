@@ -1,3 +1,5 @@
+$.notify.addStyle("mystyle",{html:"<span data-notify-text/>",classes:{base:{"white-space":"nowrap","background-color":"black",color:"white",padding:"5px","font-size":"0.63em"}}});
+
 var serverTime = 0;
 var receivedInit=false;
 var activePersonsCount=0;

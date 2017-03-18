@@ -122,6 +122,8 @@ h1 {
 
 .flexsearch--input {
     color: rgb(128, 128, 128);
+    padding-left: 0.15em;
+    font-size: 0.5em;
 }
 
 .flexsearch--input:focus {
@@ -162,10 +164,9 @@ h1 {
 }
 
 #links {
-    color: #107710;
+    color: #464640;
     font-family: 'font114514', tahoma;
-    font-size: 0.4em;
-    text-align: right;
+    font-size: 0.5em;
     bottom: 0;
     position: relative;
 }
@@ -240,15 +241,8 @@ h1 {
 }
 
 #colors span:hover {
-    font-size: 1.1em;
-    border: white solid 1px;
-    border-radius: 3px;
-}
-
-#colors span:hover {
-    font-size: 1.1em;
-    border: white solid 1px;
-    border-radius: 3px;
+    border: #b7b74d solid 1px;
+    border-radius: 5px;
 }
 
 @keyframes fadeIn { 
@@ -262,30 +256,26 @@ h1 {
 /* Theme */
 
 
-#links {
-    color: #abab2d;
-}
-
 .flexsearch--submit {
-    background-color: #abab2d;
+    background-color: #b7b74d;
 }
 
 .flexsearch--submit:hover {
-    background-color: #abab2d;
+    background-color: #b7b74d;
 }
 
 .flexsearch--input {
-    border-color: #abab2d;
+    border-color: #b7b74d;
 }
 
 #lstat {
-    color: #abab2d;
+    color: #b7b74d;
 }
 
 #rstat {
-    color: #abab2d;
+    color: #b7b74d;
 }
 
 h1 {
-    text-shadow: 0 0 8px #fff, 0 0 10px #abab2d, 0 0 15px #abab2d, 0 0 20px #abab2d, 0 0 25px #abab2d, 0 0 35px #abab2d, 0 0 50px #abab2d;
+    text-shadow: 0 0 8px #fff, 0 0 10px #b7b74d, 0 0 15px #b7b74d, 0 0 20px #b7b74d, 0 0 25px #b7b74d, 0 0 35px #b7b74d, 0 0 50px #b7b74d;
 }
