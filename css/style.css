@@ -6,6 +6,7 @@ body {
     background-color: black;
     font-family: Lato, Helvatica, Arial;
     opacity: 0;
+    font-size: 50%;
 }
 
 h1 {
