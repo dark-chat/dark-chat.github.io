@@ -92,7 +92,7 @@ function updateTimeago(){
 }
 
 function showStats(msg){
-    var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})}; r.sort(function(a, b){return a.freq-b.freq;});
+    var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})} r.sort(function(a, b){return a.freq-b.freq;});
     var t=''; for(var c=r.length-1;c>=0;c--){ t=t+r[c].word+"("+r[c].freq+") " }
     $("#statsFill").text( msg.msgCount + " Messages. Top words: " + t);
     TweenMax.to("#statsFill", 0.5, {alpha:1});
@@ -201,7 +201,7 @@ var activeMsg=null;
 
 function rollMsgs(dir){
     //if($('.newMsg').length===0) return;
-    if (activeMsg===null || tweenNewMessages==true) {
+    if (activeMsg===null || tweenNewMessages===true) {
         $('.head').removeClass('head');
         activeMsg = $('#msgcon span:last-child');
         activeMsg.addClass('head');
@@ -264,7 +264,7 @@ $(document).keydown(function(e) {
 function is_touch_device() {
   return 'ontouchstart' in window ||       // works on most browsers 
       navigator.maxTouchPoints;       // works on IE10/11 and Surface
-};
+}
 
 if(is_touch_device()){
     Hammer($("#msgcon")[0]).on("swipeleft", function() {rollMsgs('right');});
