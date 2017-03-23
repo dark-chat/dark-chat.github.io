@@ -1,4 +1,19 @@
 $.notify.addStyle("mystyle",{html:"<span data-notify-text/>",classes:{base:{"white-space":"nowrap","background-color":"black",color:"white",padding:"5px","font-size":"0.63em"}}});
+var split = new SplitText('#up h1', {type: 'words, chars'});
+function random(min, max){return (Math.random() * (max - min)) + min;}
+$(split.chars).each(function(i){
+	TweenMax.from($(this), 2.5, {
+		opacity: 0,
+		x: random(-500, 500),
+		y: random(-500, 500),
+		z: random(-500, 500),
+		scale: .1,
+		delay: i * 0.02,
+        onComplete:function(){
+            split.revert();
+        }
+	});
+});
 
 var serverTime = 0;
 var receivedInit=false;
