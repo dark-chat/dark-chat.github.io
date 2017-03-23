@@ -1,19 +1,15 @@
 $.notify.addStyle("mystyle",{html:"<span data-notify-text/>",classes:{base:{"white-space":"nowrap","background-color":"black",color:"white",padding:"5px","font-size":"0.63em"}}});
+var h1_tl = new TimelineLite();
+TweenLite.set('#up h1', {css:{perspective:500, perspectiveOrigin:"50% 50%", transformStyle:"preserve-3d", visibility:'visible'}});
 var split = new SplitText('#up h1', {type: 'words, chars'});
-function random(min, max){return (Math.random() * (max - min)) + min;}
-$(split.chars).each(function(i){
-	TweenMax.from($(this), 2.5, {
-		opacity: 0,
-		x: random(-500, 500),
-		y: random(-500, 500),
-		z: random(-500, 500),
-		scale: .1,
-		delay: i * 0.02,
-        onComplete:function(){
-            split.revert();
-        }
-	});
-});
+var numChars = split.chars.length;
+
+for(var i = 0; i < numChars; i++){
+    h1_tl.from(split.chars[i], 1, {css:{y:getRandomInt(-75, 75), x:getRandomInt(-150, 150), rotation:getRandomInt(0, 720), autoAlpha:0}, ease:Back.easeOut}, i * 0.02, "dropIn");
+}
+function getRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 var serverTime = 0;
 var receivedInit=false;
@@ -101,6 +97,7 @@ function initApp(msg){
     msgTime = msg.initChatState.msgTime;
     fillData(msg.initChatState);
     showStats(msg.stats);
+    h1_tl.staggerTo(split.chars, 4, {css:{transformOrigin:"50% 50% -30px", rotationY:-360, rotationX:360, rotation:360}, ease:Elastic.easeInOut}, 0.02, "+=1");
     receivedInit=true;
 }
 
