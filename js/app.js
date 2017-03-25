@@ -129,7 +129,7 @@ function fillData(msg){
         el.text(msg.msg);
         if (isDefined(msg.msgColor)) {
             el.addClass(msg.msgColor);
-            if (isDefined(msgStyles[msg.msgColor])){
+            if (isDefined(msgStyles[msg.msgColor]) && msg.msg.length>1){
                 styleMsg(el, msgStyles[msg.msgColor]);
             }
         }
@@ -266,19 +266,13 @@ function rollCenter(el) {
     TweenMax.to(el, 0.5, {x:"0%", ease:Power0.easeNone});
 }
 
-$(document).keydown(function(e) {
-    switch(e.which) {
-        case 37: // left
-            rollMsgs('left');
-        break;
-        
-        case 39: // right
-            rollMsgs('right');
-        break;
-
-        default: return;
+$('#msgcon').mousewheel(function(event) {
+    if (event.deltaX==-1 || event.deltaY==1){
+        rollMsgs('left');
     }
-    e.preventDefault();
+    if (event.deltaX==1 || event.deltaY==-1){
+        rollMsgs('right');
+    }
 });
 
 function is_touch_device() {
@@ -307,42 +301,43 @@ function notConnected(){
 
 var msgStyles = {
     lacy : {
-        c1: '#ff0080',
-        c2: '#0000ff',
-        x1: -0.3,
-        x2: 0.3,
-        y1: -0.2,
-        y2: 0.2,
-        b1: 0.5,
-        b2: 0.5,
-        basec1: '#00a0a0',
-        basec2: '#00a0a0'
+        fontColors: ['#00a0a0', '#00a0a0'],
+        shadowColors: ['#ff0080', '#0000ff'],
+        xOffset: [-0.3, 0.3],
+        yOffset: [-0.2, 0.2],
+        blur: [0.5, 0.5]
     },
     greenie : {
-        c1: '#0000ff',
-        c2: '#ff00ff',
-        x1: 0,
-        x2: 0,
-        y1: 0,
-        y2: 0.6,
-        b1: 0.4,
-        b2: 0.9,
-        basec1: '#408040',
-        basec2: '#008000'
+        fontColors: ['#408040', '#008000'],
+        shadowColors: ['#0000ff', '#ff00ff'],
+        xOffset: [0, 0],
+        yOffset: [0, 0.6],
+        blur: [0.4, 0.9]
+    },
+    nimda : {
+        fontColors: [brighter('red'), brighter('orange'), brighter('yellow'), brighter('green'), brighter('blue'), brighter('indigo'), brighter('violet')],
+        shadowColors: ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'],
+        xOffset: [-0.2, 0.2],
+        yOffset: [-0.2, 0.2],
+        blur: [0.8, 0.8]
     }
 };
+
+function brighter(c){
+    return chroma(c).brighten().get('hex');
+}
 
 function styleMsg(el, style){
     var split = new SplitText(el, {type: 'words, chars'});
     var numChars = split.chars.length;
-    var colors = chroma.scale([style.basec1, style.basec2]).colors(numChars);
+    var colors = chroma.scale(style.fontColors).mode('hsl').colors(numChars);
     var shadowStyles = [];
     
-    var charColorArr = chroma.scale([style.c1, style.c2]).colors(numChars);
+    var charColorArr = chroma.scale(style.shadowColors).colors(numChars);
     for (var c=0; c<numChars; c++){
-        var sx = map(c, 0, numChars, style.x1, style.x2);
-        var sy = map(c, 0, numChars, style.y1, style.y2);
-        var b = map(c, 0, numChars, style.b1, style.b2);
+        var sx = map(c, 0, numChars, style.xOffset[0], style.xOffset[1]);
+        var sy = map(c, 0, numChars, style.yOffset[0], style.yOffset[1]);
+        var b = map(c, 0, numChars, style.blur[0], style.blur[1]);
         var color = charColorArr[c];
         shadowStyles.push(sx+'ex '+sy+'ex '+b+'ex '+color);
     }
@@ -353,3 +348,7 @@ function styleMsg(el, style){
 function map(n, start1, stop1, start2, stop2) {
     return ((n-start1)/(stop1-start1))*(stop2-start2)+start2;
 }
+
+styleMsg('.lacy', msgStyles.lacy);
+styleMsg('.greenie', msgStyles.greenie);
+styleMsg('.nimda', msgStyles.nimda);
