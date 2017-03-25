@@ -127,7 +127,12 @@ function fillData(msg){
         }
         var el = $('<span>');
         el.text(msg.msg);
-        if (isDefined(msg.msgColor)) el.addClass(msg.msgColor);
+        if (isDefined(msg.msgColor)) {
+            el.addClass(msg.msgColor);
+            if (isDefined(msgStyles[msg.msgColor])){
+                styleMsg(el, msgStyles[msg.msgColor]);
+            }
+        }
         $('#msgcon').append(el);
         el.addClass("newMsg");
         if(tweenNewMessages && receivedInit){
@@ -295,4 +300,56 @@ $('#colors span').on('click', function(){
 
 function notConnected(){
     $.notify('Still connecting...', {style: 'mystyle'});
+}
+
+
+///////////////// styles
+
+var msgStyles = {
+    lacy : {
+        c1: '#ff0080',
+        c2: '#0000ff',
+        x1: -0.3,
+        x2: 0.3,
+        y1: -0.2,
+        y2: 0.2,
+        b1: 0.5,
+        b2: 0.5,
+        basec1: '#00a0a0',
+        basec2: '#00a0a0'
+    },
+    greenie : {
+        c1: '#0000ff',
+        c2: '#ff00ff',
+        x1: 0,
+        x2: 0,
+        y1: 0,
+        y2: 0.6,
+        b1: 0.4,
+        b2: 0.9,
+        basec1: '#408040',
+        basec2: '#008000'
+    }
+};
+
+function styleMsg(el, style){
+    var split = new SplitText(el, {type: 'words, chars'});
+    var numChars = split.chars.length;
+    var colors = chroma.scale([style.basec1, style.basec2]).colors(numChars);
+    var shadowStyles = [];
+    
+    var charColorArr = chroma.scale([style.c1, style.c2]).colors(numChars);
+    for (var c=0; c<numChars; c++){
+        var sx = map(c, 0, numChars, style.x1, style.x2);
+        var sy = map(c, 0, numChars, style.y1, style.y2);
+        var b = map(c, 0, numChars, style.b1, style.b2);
+        var color = charColorArr[c];
+        shadowStyles.push(sx+'ex '+sy+'ex '+b+'ex '+color);
+    }
+
+    TweenMax.staggerTo(split.chars,0,{cycle:{textShadow:shadowStyles, color:colors}});
+}
+
+function map(n, start1, stop1, start2, stop2) {
+    return ((n-start1)/(stop1-start1))*(stop2-start2)+start2;
 }
