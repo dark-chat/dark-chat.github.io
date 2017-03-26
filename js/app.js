@@ -353,41 +353,37 @@ Object.keys(msgStyles).map(function(value){
     styleMsg('.'+value, msgStyles[value]);
 });
 
-/*
-$('.cornerbutton').click(showCornerBox);
 
-//$('.cornerbox').blur(hideCornerBox);
+/////////////// cornerbox
 
-$('.cornerbox').on('focusout', function () {
-  showCornerBox();
+$(function(){
+    var twPanelHide;
+
+    $('.cornerbutton').on('click', showCornerbox);
+
+    $('.cornerbox').on('focusout', hideCornerbox);
+
+    $('.cornerbutton').hover(showCornerbox);
+
+    function showCornerbox(){
+        var el = $('.cornerbox');
+
+        if(twPanelHide)return;
+        if(el.hasClass('active'))return;
+
+        console.log('show');
+        el.addClass('active').focus();
+    }
+
+    function hideCornerbox(){
+        console.log('hide');
+        var el = $('.cornerbox');
+        if(el.hasClass('active')==false)return;
+        twPanelHide = TweenMax.to(el.get(0), 0.7, {opacity:0, onComplete:function(){
+            el.removeClass('active');
+            TweenMax.set(el.get(0), {opacity:1});
+            twPanelHide=null;
+        }});
+    }
 });
 
-
-
-*/
-
-var twPanelHide;
-
-$('.cornerbutton').on('click', showCornerbox);
-
-$('.cornerbox').on('focusout', hideCornerbox);
-
-$('.cornerbutton').hover(showCornerbox);
-
-function showCornerbox(){
-    var el = $('.cornerbox');
-
-    if(el.hasClass('active')===true)return;
-    console.log('show');
-    el.addClass('active').focus();
-}
-
-function hideCornerbox(){
-    console.log('hide');
-    var el = $('.cornerbox');
-    if(el.hasClass('active')==false)return;
-    twPanelHide = TweenMax.to(el.get(0), 0.7, {opacity:0, onComplete:function(){
-        el.removeClass('active');
-        TweenMax.set(el.get(0), {opacity:1});
-    }});
-}
