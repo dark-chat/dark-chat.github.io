@@ -119,21 +119,20 @@ h1 {
     font-style: italic;
 }
 
-#lstat {
-    position: absolute;
-    color: #107710;
-    line-height: 1px;
-    font-size: 0.43em;
-    font-style: italic;
-    opacity: 0.7;
-}
-
 #rstat {
     position: absolute;
     color: #107710;
     line-height: 1px;
     font-size: 0.43em;
-    font-style: italic;
+    opacity: 0.7;
+    display:none;
+}
+
+#lstat {
+    position: absolute;
+    color: #107710;
+    line-height: 1px;
+    font-size: 0.43em;
     right: 0.5%;
     opacity: 0.7;
 }
