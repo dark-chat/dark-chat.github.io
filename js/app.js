@@ -109,8 +109,8 @@ function updateTimeago(){
 function showStats(msg){
     var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})} r.sort(function(a, b){return a.freq-b.freq;});
     var t=''; for(var c=r.length-1;c>=0;c--){ t=t+r[c].word+"("+r[c].freq+") " }
-    $("#statsFill").text( msg.msgCount + " Messages. Top words: " + t);
-    TweenMax.to("#statsFill", 0.5, {alpha:1});
+    $("#stats").text( msg.msgCount + " Messages. Top words: " + t);
+    TweenMax.to("#stats", 0.5, {alpha:1});
 }
 
 function fillData(msg){
@@ -349,6 +349,45 @@ function map(n, start1, stop1, start2, stop2) {
     return ((n-start1)/(stop1-start1))*(stop2-start2)+start2;
 }
 
-styleMsg('.lacy', msgStyles.lacy);
-styleMsg('.greenie', msgStyles.greenie);
-styleMsg('.nimda', msgStyles.nimda);
+Object.keys(msgStyles).map(function(value){
+    styleMsg('.'+value, msgStyles[value]);
+});
+
+/*
+$('.cornerbutton').click(showCornerBox);
+
+//$('.cornerbox').blur(hideCornerBox);
+
+$('.cornerbox').on('focusout', function () {
+  showCornerBox();
+});
+
+
+
+*/
+
+var twPanelHide;
+
+$('.cornerbutton').on('click', showCornerbox);
+
+$('.cornerbox').on('focusout', hideCornerbox);
+
+$('.cornerbutton').hover(showCornerbox);
+
+function showCornerbox(){
+    var el = $('.cornerbox');
+
+    if(el.hasClass('active')===true)return;
+    console.log('show');
+    el.addClass('active').focus();
+}
+
+function hideCornerbox(){
+    console.log('hide');
+    var el = $('.cornerbox');
+    if(el.hasClass('active')==false)return;
+    twPanelHide = TweenMax.to(el.get(0), 0.7, {opacity:0, onComplete:function(){
+        el.removeClass('active');
+        TweenMax.set(el.get(0), {opacity:1});
+    }});
+}
