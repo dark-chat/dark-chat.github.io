@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href='css/style.css' rel='stylesheet' type='text/css'>
     <link href='css/universe.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
 
 <body>
@@ -17,20 +18,22 @@
     <div id="msgcon"></div>
     <div id="down">
         <div id="submitcon">
-            <span id="lstat"><span class="animate-flicker">Connecting...</span></span>
-            <span id="rstat"></span>
             <form id="inputform" action="" method="post">
                 <input autocomplete="off" tabindex="1" id="inputbox" type="text" placeholder="Type here and press enter...">
                 <input type="submit" style="position: absolute;visibility: hidden;">
             </form>
+            <span id="timestat"></span>
+            <span id="onlinestatcon"><i class="fa fa-arrows-alt" aria-hidden="true"></i> <span id="onlinestat" class="animate-flicker">Connecting...</span></span>
         </div>
     </div>
-    <div class='cornerbutton'></div>
+    <i class="cornerbutton fa fa-ellipsis-v" aria-hidden="true"> </i>
     <div class='cornerbox'  tabindex="-1">
+        <i class="fa fa-times closecornerbox" aria-hidden="true"></i>
         <div id="panel">
                 <span>Colors: <span id="colors"><span class="default">Default</span> <span class="indy">Cyan</span> <span class="tori">White</span> <span class="lacy">Persian</span> <span class="greenie">Goblin</span> <span class="nimda">Rainbow</span> <span class="john">Brown</span> <span class="blue">Blue</span> <span class="jack">Green</span> <span class="kat">Pink</span> <span class="alex">Java</span></span></span>
                 <br><br>
                 <span id="stats">.</span>
+                <br><br>
         </div>
     </div>
     <script src="js/jquery-3.2.0.min.js"></script>
@@ -87,6 +90,8 @@
     <script src="js/notify.min.js"></script>
     <script src="js/SplitText.min.js"></script>
     <script src="js/TweenMax.min.js"></script>
+    <script src="js/Draggable.min.js"></script>
+    <script src="js/ThrowPropsPlugin.min.js"></script>
     <script src="js/hammer.min.js"></script>
     <script src="js/chroma.min.js"></script>
     <script src="js/jquery.mousewheel.min.js"></script>

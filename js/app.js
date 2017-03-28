@@ -1,3 +1,4 @@
+var log = console.log.bind(console);
 $.notify.addStyle("mystyle",{html:"<span data-notify-text/>",classes:{base:{"white-space":"nowrap","background-color":"black",color:"white",padding:"5px","font-size":"0.63em"}}});
 var h1_tl = new TimelineLite();
 TweenLite.set('#up h1', {css:{perspective:500, perspectiveOrigin:"50% 50%", transformStyle:"preserve-3d", visibility:'visible'}});
@@ -54,7 +55,8 @@ setInterval(function(){
 /*  Socket Events */
 
 socket.on('disconnect', function(){
-    $('#lstat').html('<span class="animate-flicker">Lost connection, reconnecting...</span>');
+    $('#onlinestat').addClass('animate-flicker');
+    $('#onlinestat').text('Lost connection, reconnecting...');
     receivedInit=false;
     getInit();
 });
@@ -99,6 +101,7 @@ function initApp(msg){
     showStats(msg.stats);
     h1_tl.staggerTo(split.chars, 4, {css:{transformOrigin:"50% 50% -30px", rotationY:-360, rotationX:360, rotation:360}, ease:Elastic.easeInOut}, 0.02, "+=1");
     receivedInit=true;
+    $('#onlinestat').removeClass('animate-flicker');
 }
 
 function updateTimeago(){
@@ -173,12 +176,12 @@ function fillData(msg){
         var is_are1 = onP<2?" person is ":" persons are ";
         var is_are2 = acP<2?" is ":" are ";
         if(onP>0&&acP>0){
-            $('#lstat').text( onP + is_are1 +"watching, of which "+acP+is_are2+"talking.");
+            $('#onlinestat').text( onP + is_are1 +"watching, of which "+acP+is_are2+"talking.");
         }else if(onP>0) {
-            $('#lstat').text(onP + is_are1 +"watching.");
+            $('#onlinestat').text(onP + is_are1 +"watching.");
         }
         // else{
-        //     $('#lstat').text("Noone is here. ");
+        //     $('#onlinestat').text("Noone is here. ");
         // }
     }
 
@@ -287,7 +290,7 @@ if(is_touch_device()){
 
 $('#colors span').on('click', function(){
     if(!socket.connected) notConnected();
-    //console.log($(this).attr('class'));
+    //log($(this).attr('class'));
     var chosenColor = $(this).attr('class');
     socket.emit('color',{"color":chosenColor});
 })
@@ -361,22 +364,20 @@ $(function(){
 
     $('.cornerbutton').on('click', showCornerbox);
 
-    $('.cornerbox').on('focusout', hideCornerbox);
+    $('.closecornerbox').on('click', hideCornerbox);
 
-    $('.cornerbutton').hover(showCornerbox);
-
-    function showCornerbox(){
+    function showCornerbox(event){
         var el = $('.cornerbox');
 
         if(twPanelHide)return;
         if(el.hasClass('active'))return;
 
-        //console.log('show');
+        //log('show');
         el.addClass('active').focus();
     }
 
-    function hideCornerbox(){
-        //console.log('hide');
+    function hideCornerbox(event){
+        log('hide');
         var el = $('.cornerbox');
         if(el.hasClass('active')==false)return;
         twPanelHide = TweenMax.to(el.get(0), 0.7, {opacity:0, onComplete:function(){
@@ -387,3 +388,6 @@ $(function(){
     }
 });
 
+/////
+
+Draggable.create("#onlinestatcon", {type:"x,y", edgeResistance:0.65, bounds:"body", throwProps:true, cursor: 'grab', onRelease:function(){log(this.endX);}});
