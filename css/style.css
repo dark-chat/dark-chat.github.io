@@ -14,11 +14,11 @@ body {
 }
 
 h1 {
-    font-size: 1.2em;
+    font-size: 1.3em;
     line-height: 200%;
     color: #000;
     /*Use shadows to slowly build up the glow. The first shadow should be the colour of the text. Subsequent shadows are the colour you want the glow to be, all with no x or y offset and with increasing amounts of blur (the number of shadows you use depends on how big you want the glow to be).*/
-    text-shadow: 0 0 10px #fff, 0 0 20px #00aa00, 0 0 30px #00aa00, 0 0 40px #00aa00, 0 0 50px #00aa00, 0 0 60px #00aa00, 0 0 70px #00aa00;
+    text-shadow: 0 0 8px #fff, 0 0 10px #b7b74d, 0 0 15px #b7b74d, 0 0 20px #b7b74d, 0 0 25px #b7b74d, 0 0 35px #b7b74d, 0 0 50px #b7b74d;
     visibility: hidden;
 }
 
@@ -121,7 +121,7 @@ h1 {
 
 #timestat {
     position: absolute;
-    color: #107710;
+    color: #b7b74d;
     line-height: 1px;
     font-size: 0.43em;
     opacity: 0.7;
@@ -130,9 +130,9 @@ h1 {
 
 #onlinestatcon {
     position: absolute;
-    color: #107710;
+    color: #b7b74d;
     line-height: 1px;
-    font-size: 0.43em;
+    font-size: 0.5em;
     right: 3em;
     opacity: 0.7;
     cursor: pointer;
@@ -186,12 +186,12 @@ h1 {
     position:absolute;
     right:0;
     bottom:.02em;
-    font-size: .6em!important;
+    font-size: .7em!important;
     color: #b7b74d;
     padding:1px;
     cursor: pointer;
     display: block;
-    width:1.1em;
+    width:1.6em;
     text-align: center;
 }
 .default {
@@ -260,18 +260,4 @@ h1 {
 
 .animate-flicker {
     animation: fadeIn 0.5s infinite alternate;
-}
-
-/* Theme */
-
-#onlinestatcon {
-    color: #b7b74d;
-}
-
-#timestat {
-    color: #b7b74d;
-}
-
-h1 {
-    text-shadow: 0 0 8px #fff, 0 0 10px #b7b74d, 0 0 15px #b7b74d, 0 0 20px #b7b74d, 0 0 25px #b7b74d, 0 0 35px #b7b74d, 0 0 50px #b7b74d;
 }
