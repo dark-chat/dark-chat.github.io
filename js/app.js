@@ -371,12 +371,12 @@ $(function(){
         if(twPanelHide)return;
         if(el.hasClass('active'))return;
 
-        console.log('show');
+        //console.log('show');
         el.addClass('active').focus();
     }
 
     function hideCornerbox(){
-        console.log('hide');
+        //console.log('hide');
         var el = $('.cornerbox');
         if(el.hasClass('active')==false)return;
         twPanelHide = TweenMax.to(el.get(0), 0.7, {opacity:0, onComplete:function(){
