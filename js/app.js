@@ -361,6 +361,7 @@ Object.keys(msgStyles).map(function(value){
 
 $(function(){
     var twPanelHide;
+    var twPanelShow;
 
     $('.cornerbutton').on('click', showCornerbox);
 
@@ -369,22 +370,29 @@ $(function(){
     function showCornerbox(event){
         var el = $('.cornerbox');
 
-        if(twPanelHide)return;
+        //if(twPanelHide)return;
         if(el.hasClass('active'))return;
-
-        //log('show');
         el.addClass('active').focus();
+        
+        //log('show');
+        // el.addClass('active').focus();
+        // twPanelShow = TweenMax.from(el.get(0), 0.5, {x:"+=100%", y:"-=100%", opacity:0, onComplete:function(){
+        //     TweenMax.set(el.get(0), {opacity:1});
+        //     twPanelShow=null;
+        // }});
     }
 
     function hideCornerbox(event){
         log('hide');
         var el = $('.cornerbox');
         if(el.hasClass('active')==false)return;
-        twPanelHide = TweenMax.to(el.get(0), 0.7, {opacity:0, onComplete:function(){
-            el.removeClass('active');
-            TweenMax.set(el.get(0), {opacity:1});
-            twPanelHide=null;
-        }});
+        el.removeClass('active'); // comment this out when using gsap
+
+        // twPanelHide = TweenMax.to(el.get(0), 0.5, {opacity:0, onComplete:function(){
+        //     el.removeClass('active');
+        //     TweenMax.set(el.get(0), {opacity:1});
+        //     twPanelHide=null;
+        // }});
     }
 });
 

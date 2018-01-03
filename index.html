@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Dark Chat</title>
     <link rel="icon" href="favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href='css/style.css' rel='stylesheet' type='text/css'>
-    <link href='css/universe.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
-
 <body>
-    <div class="universe"></div>
     <div id="up"><h1>Chat In The Dark!</h1></div>
     <div id="msgcon"></div>
     <div id="down">
@@ -87,6 +82,56 @@
         $(this).attr('placeholder',$(this).data('placeholder'));
         });
     </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        void main() {
+            gl_Position = vec4( position, 1.0 );
+        }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        
+        vec2 rotate(vec2 point, float rads) {
+            float cs = cos(rads);
+            float sn = sin(rads);
+            return point * mat2(cs, -sn, sn, cs);
+        }	
+        
+        void main() {
+            //vec2 st = gl_FragCoord.xy/u_resolution.xy;
+            //gl_FragColor=vec4(st.x,st.y,0.0,1.0);
+
+            float rads = radians(u_time*3.15);
+            vec2 position = gl_FragCoord.xy / u_resolution.xy;
+            position += rotate(position, rads);
+
+            ///// stuff
+
+            vec3 curr_color = vec3(0.0);
+
+            float scale = sin(0.3 * u_time) + 5.0;
+            vec2 position2 = (((gl_FragCoord.xy / u_resolution) - 0.5) * scale);
+            float gradient = 0.0;
+            vec3 color = vec3(0.0);
+            float fade = 0.0;
+            float z = 0.0;
+                vec2 centered_coord = position2 - vec2(sin(u_time*0.1),sin(u_time*0.1));
+            centered_coord = rotate(centered_coord, rads);
+            
+            for (float i=1.0; i<=30.0; i++)
+            {
+                vec2 star_pos = vec2(sin(i) * 250.0, sin(i*i*i) * 250.0);
+                float z = mod(i*i - 10.0*u_time, 256.0);
+                float fade = (256.0 - z) /256.0;
+                vec2 blob_coord = star_pos / z;
+                gradient += ((fade / 384.0) / pow(length(centered_coord - blob_coord), 1.1)) * ( fade);
+            }
+        
+            curr_color += gradient;
+            
+            gl_FragColor = vec4(curr_color, 1.0);
+        }
+    </script>
     <script src="js/moment.min.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/SplitText.min.js"></script>
@@ -97,6 +142,8 @@
     <script src="js/chroma.min.js"></script>
     <script src="js/jquery.mousewheel.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/three.min.js"></script>
+    <script src="js/3d.js"></script>
 </body>
 
 </html>

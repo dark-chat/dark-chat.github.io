@@ -1,14 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+
 html,
 body {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    background-color: black;
-    font-family: Lato, Helvatica, Arial;
+    background-color: #00000000;
+    font-family: 'Fredoka One';
     opacity: 0;
     font-size: 50%;
+    padding: 0;
+    margin: 0;
 }
-
+canvas {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
 *:focus {
     outline: none;
 }
@@ -25,7 +36,7 @@ h1 {
 #up {
     height:15%;
     text-align: center;
-    background: #000;
+    background: #0000;
 }
 
 #down {
@@ -33,7 +44,7 @@ h1 {
 }
 
 #msgcon {
-    font-size: 1.6em;
+    font-size: 1.7em;
     font-weight: bold;
     color: rgb(128, 128, 128);
     position: absolute;
@@ -98,10 +109,15 @@ h1 {
     font-size: 0.6em;
     background-color: black;
     width:99%;
-    color: rgb(128, 128, 128);
-    border:none;
+    color: rgb(228, 228, 228);
+    border:3px solid #ffffff22;
+    border-radius: 5px;
     padding-left: 0.15em;
-    font-size: 0.5em;
+    font-size: 0.41em;
+    line-height: 2em;
+    height: 2em;
+    font-family: 'Fredoka One';
+    margin-bottom: 0.5em;
 }
 
 #inputbox:focus {
@@ -163,8 +179,6 @@ h1 {
 
 .cornerbox {
     position:absolute;
-    right:0;
-    bottom:0;
     padding:0.57em 0 0.5em 0.67em;
     background:#222;
     border-width: 1px;
@@ -172,26 +186,37 @@ h1 {
     border-style: solid none none solid;
     border-radius: 10px 0 0 0;
     color:lightgray;
-    width: 38vw;
+    width: 41vw;
     max-width: 300px;
-    display: none;
-    z-index: 99999;
+    z-index: -1;
+    line-height: 0.9em;
+    opacity: 0;
+    transition: all cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s;
+    right:0;
+    top:0;
+    transform: translate3d(100%, -100%, 0);
 }
 
 .cornerbox.active {
-    display: block;
+    opacity: 1;
+    z-index: 99999;
+    transform: translate3d(0, 0, 0);
 }
 
 .cornerbutton {
     position:absolute;
     right:0;
-    bottom:.02em;
-    font-size: .7em!important;
+    top:.02em;
+    font-size: .9em!important;
+    background-color: #b7b74d55;
+    border-radius: 100%/100%;
     color: #b7b74d;
-    padding:1px;
+    padding:0.2em;
+    margin: 0.3em;
     cursor: pointer;
     display: block;
-    width:1.6em;
+    width:1em;
+    height:1em;
     text-align: center;
 }
 .default {
