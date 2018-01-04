@@ -368,11 +368,11 @@ $(function(){
     $('.closecornerbox').on('click', hideCornerbox);
 
     function showCornerbox(event){
-        var el = $('.cornerbox');
-
+        // var el = $('.cornerbox');
+        document.querySelector('.cornerbox').classList.add('active');
         //if(twPanelHide)return;
-        if(el.hasClass('active'))return;
-        el.addClass('active').focus();
+        // if(el.hasClass('active'))return;
+        // el.addClass('active').focus();
         
         //log('show');
         // el.addClass('active').focus();
@@ -383,10 +383,11 @@ $(function(){
     }
 
     function hideCornerbox(event){
-        log('hide');
-        var el = $('.cornerbox');
-        if(el.hasClass('active')==false)return;
-        el.removeClass('active'); // comment this out when using gsap
+        document.querySelector('.cornerbox').classList.remove('active');
+        // log('hide');
+        // var el = $('.cornerbox');
+        // if(el.hasClass('active')==false)return;
+        // el.removeClass('active'); // comment this out when using gsap
 
         // twPanelHide = TweenMax.to(el.get(0), 0.5, {opacity:0, onComplete:function(){
         //     el.removeClass('active');
