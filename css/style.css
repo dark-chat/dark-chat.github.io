@@ -110,14 +110,14 @@ h1 {
     background-color: black;
     width:99%;
     color: rgb(228, 228, 228);
-    border:3px solid #ffffff22;
-    border-radius: 5px;
     padding-left: 0.15em;
-    font-size: 0.41em;
+    font-size: 0.62em;
     line-height: 2em;
     height: 2em;
     font-family: 'Fredoka One';
     margin-bottom: 0.5em;
+    border:none;
+    /* border-radius: 5px; */
 }
 
 #inputbox:focus {
@@ -148,12 +148,12 @@ h1 {
     position: absolute;
     color: #b7b74d;
     line-height: 1px;
-    font-size: 0.5em;
+    font-size: 0.55em;
     right: 3em;
     opacity: 0.7;
     cursor: pointer;
     cursor: -webkit-grab;
-    bottom: 3em;
+    bottom: 4.2em;
 }
 
 .closecornerbox {
