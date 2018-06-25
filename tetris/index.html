@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<style>
+	@font-face {
+		font-family: 'Press Start 2P';
+		font-style: normal;
+		font-weight: 400;
+		src: local('Press Start 2P Regular'), local('PressStart2P-Regular'), url('font/PressStart2P-Regular.woff2') format('woff2');
+	}
+	body {
+		font-family: 'Press Start 2P';
+		background-color: black;
+	}
+	#container {
+		display: flex;
+		justify-content: center;
+		height: 730px;
+	}
+	#instruction {
+		font-size: 0.5em;
+		bottom: 1em;
+		position: absolute;
+		white-space: nowrap;
+	}
+	#gameover {
+		visibility: hidden;
+	}
+	html {
+		font-size: 16px;
+	}
+	#panel {
+		margin-left: 1em;
+		color: white;
+		font-size: 1.7em;
+		position: relative;
+		white-space: nowrap;
+		display: none;
+		width: 250px;
+	}
+	#game {
+		display: none;
+	}
+	#loader {
+		margin-top: 2em;
+		color: white;
+		/* display: none; */
+		visibility: hidden;
+	}
+	@media screen and (max-width: 700px) {
+		html {
+			font-size: 6px;
+		}
+		#game, canvas {
+			width:250px
+		}
+		#container {
+			height: auto;
+		}
+		#instruction {
+			white-space: normal;
+		}
+		#panel {
+			width: 100px;
+		}
+	}
+</style>
+<body>
+	<div id="container">
+		<div id="loader">Loading <span id="loading_percentage">...</span></div>
+		<div id="game"></div>
+		<div id="panel">
+			<div>Score <span id="score"></span></div>
+			<br>
+			<br>
+			<div>Level <span id="level"></span></div>
+			<br>
+			<br>
+			<br>
+			<div id="gameover">Game Over</div>
+			<br>
+			<div id="instruction"><div>controls</div><br><span style="color:darkred;">z, x:</span> rotate piece<br> <span style="color:darkred;">r:</span> restart game</div>
+		</div>
+	</div>
+	<script>
+		setTimeout(()=>{
+			document.querySelector('#loader').style.visibility = "visible";
+		}, 1000);
+	</script>
+	<script src="js/pixi.min.js"></script>
+	<script src="js/pixi-sound.js"></script>
+    <script src="js/main.js" type="module"></script>
+</body>
+</html>
