@@ -16,32 +16,34 @@
 	body {
 		font-family: 'Press Start 2P';
 		background-color: black;
+		overflow: hidden;
 	}
 	#container {
 		display: flex;
 		justify-content: center;
-		height: 730px;
+		max-height: 730px;
+		height: 100vh;
 	}
 	#instruction {
-		font-size: 0.5em;
+		font-size: 0.6em;
 		bottom: 1em;
 		position: absolute;
-		white-space: nowrap;
 	}
 	#gameover {
 		visibility: hidden;
 	}
 	html {
-		font-size: 16px;
+		font-size: 2vh;
 	}
 	#panel {
 		margin-left: 1em;
 		color: white;
 		font-size: 1.7em;
 		position: relative;
-		white-space: nowrap;
 		display: none;
-		width: 250px;
+		/* width: 250px; */
+		max-height: 95vh;
+		max-width: 28vw;
 	}
 	#game {
 		display: none;
@@ -52,23 +54,21 @@
 		/* display: none; */
 		visibility: hidden;
 	}
-	@media screen and (max-width: 700px) {
+	#game, canvas {
+		width:auto;
+		max-height: 95vh;
+		max-width: 67vw;
+	}
+
+	@media screen and (orientation:portrait) {
 		html {
-			font-size: 6px;
-		}
-		#game, canvas {
-			width:250px
-		}
-		#container {
-			height: auto;
-		}
-		#instruction {
-			white-space: normal;
+			font-size: 1.8vw;
 		}
 		#panel {
-			width: 100px;
+			height: calc(67vw * 1.5)
 		}
 	}
+
 </style>
 <body>
 	<div id="container">
@@ -84,7 +84,7 @@
 			<br>
 			<div id="gameover">Game Over</div>
 			<br>
-			<div id="instruction"><div>controls</div><br><span style="color:darkred;">z, x:</span> rotate piece<br> <span style="color:darkred;">r:</span> restart game</div>
+			<div id="instruction"><div style="text-decoration: underline;">controls</div><br><span style="color:yellow;">z, x:</span> rotate piece<br> <span style="color:yellow;">r:</span> restart game</div>
 		</div>
 	</div>
 	<script>
