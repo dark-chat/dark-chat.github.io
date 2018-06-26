@@ -1,4 +1,6 @@
-var log = console.log.bind(console);
+//TODO: remove jquery, flexbox
+
+var log = console.log;
 $.notify.addStyle("mystyle",{html:"<span data-notify-text/>",classes:{base:{"white-space":"nowrap","background-color":"black",color:"white",padding:"5px","font-size":"0.63em"}}});
 var h1_tl = new TimelineLite();
 TweenLite.set('#up h1', {css:{perspective:500, perspectiveOrigin:"50% 50%", transformStyle:"preserve-3d", visibility:'visible'}});
@@ -56,7 +58,7 @@ setInterval(function(){
 
 socket.on('disconnect', function(){
     $('#onlinestat').addClass('animate-flicker');
-    $('#onlinestat').text('Lost connection, reconnecting...');
+    $('#onlinestat').text('reconnecting ...');
     receivedInit=false;
     getInit();
 });
@@ -83,11 +85,7 @@ socket.on('cmd',function(msg){
 //function up(){$.ajax(socketServer+"/l");}up();setInterval(up,50000);
 socket.on('updateState',function(msg){
     if(receivedInit===false)return;
-    fillData(msg);
-});
-
-socket.on('stats',function(msg){
-    showStats(msg);
+    displayData(msg);
 });
 
 /* --------- */
@@ -97,8 +95,7 @@ function initApp(msg){
     activePersonsCount = msg.initChatState.activePersonsCount;
     onlinePersonsCount = msg.initChatState.onlinePersonsCount;
     msgTime = msg.initChatState.msgTime;
-    fillData(msg.initChatState);
-    showStats(msg.stats);
+    displayData(msg.initChatState);
     // h1_tl.staggerTo(split.chars, 4, {css:{transformOrigin:"50% 50% -30px", rotationY:-360, rotationX:360, rotation:360}, ease:Elastic.easeInOut}, 0.02, "+=1");
     receivedInit=true;
     $('#onlinestat').removeClass('animate-flicker');
@@ -109,14 +106,7 @@ function updateTimeago(){
     fillRstat(msgTime);
 }
 
-function showStats(msg){
-    var r=[]; for (var word in msg.topWords){var freq=msg.topWords[word];r.push({"word":word,"freq":freq})} r.sort(function(a, b){return a.freq-b.freq;});
-    var t=''; for(var c=r.length-1;c>=0;c--){ t=t+r[c].word+"("+r[c].freq+") " }
-    $("#stats").text( msg.msgCount + " Messages. Top words: " + t);
-    TweenMax.to("#stats", 0.5, {alpha:1});
-}
-
-function fillData(msg){
+function displayData(msg){
     if (isDefined(msg.msg) && isDefined(msg.msgTime) && msg.msg!=cachedMessage){
         cachedMessage=msg.msg;
         // $('.activeMsg').removeClass('activeMsg').addClass('leftMsg')
@@ -173,12 +163,16 @@ function fillData(msg){
     }
 
     if(newStats){
-        var is_are1 = onP<2?" person is ":" persons are ";
-        var is_are2 = acP<2?" is ":" are ";
+        // var is_are1 = onP<2?" person ":" people ";
+        var is_are1 = onP<2?" ":" ";
+        // var is_are2 = acP<2?" is ":" are ";
         if(onP>0&&acP>0){
-            $('#onlinestat').text( onP + is_are1 +"watching, of which "+acP+is_are2+"talking.");
+            // $('#onlinestat').text( onP + is_are1 +"watching, of which "+acP+is_are2+"talking.");
+            // $('#onlinestat').text(onP + is_are1 +"online");
+            $('#onlinestat').text(onP + is_are1 +"");
         }else if(onP>0) {
-            $('#onlinestat').text(onP + is_are1 +"watching.");
+            // $('#onlinestat').text(onP + is_are1 +"online");
+            $('#onlinestat').text(onP + is_are1 +"");
         }
         // else{
         //     $('#onlinestat').text("Noone is here. ");
@@ -195,7 +189,6 @@ function fillRstat(time){
 function postMsg(msg){
     if(!socket.connected) notConnected();
 
-    while($('.head').next().length){rollMsgs('right');}
     socket.emit('post',{'msg':msg});
     $( "#inputbox" ).val('');
 }
@@ -222,72 +215,6 @@ function isDefined(val) {
 var tweenNewMessages = true;
 var activeMsg=null;
 
-function rollMsgs(dir){
-    //if($('.newMsg').length===0) return;
-    if (activeMsg===null || tweenNewMessages===true) {
-        $('.head').removeClass('head');
-        activeMsg = $('#msgcon span:last-child');
-        activeMsg.addClass('head');
-    }
-
-    if(dir==='right'){
-        if(activeMsg.next().length){
-            tweenNewMessages = false;
-            rollLeft(activeMsg);
-            $('.head').removeClass('head');
-            activeMsg = activeMsg.next();
-            activeMsg.addClass('head');
-            rollCenter(activeMsg);
-            if( $('.newMsg:last-child').is(activeMsg) ) {
-                tweenNewMessages = true;
-                if (document.title != 'Dark Chat') document.title = 'Dark Chat';
-            }
-        }
-    }
-
-    if(dir==='left'){
-        if(activeMsg.prev().length){
-            tweenNewMessages = false;
-            rollRight(activeMsg);
-            $('.head').removeClass('head');
-            activeMsg = activeMsg.prev();
-            activeMsg.addClass('head');
-            rollCenter(activeMsg);
-        }
-    }
-}
-
-function rollLeft(el) {
-    TweenMax.to(el, 0.5, {x:"-100%", ease:Power0.easeNone});
-}
-
-function rollRight(el) {
-    TweenMax.to(el, 0.5, {x:"100%", ease:Power0.easeNone});
-}
-
-function rollCenter(el) {
-    TweenMax.to(el, 0.5, {x:"0%", ease:Power0.easeNone});
-}
-
-$('#msgcon').mousewheel(function(event) {
-    if (event.deltaX==-1 || event.deltaY==1){
-        rollMsgs('left');
-    }
-    if (event.deltaX==1 || event.deltaY==-1){
-        rollMsgs('right');
-    }
-});
-
-function is_touch_device() {
-  return 'ontouchstart' in window ||       // works on most browsers 
-      navigator.maxTouchPoints;       // works on IE10/11 and Surface
-}
-
-if(is_touch_device()){
-    Hammer($("#msgcon")[0]).on("swipeleft", function() {rollMsgs('right');});
-    Hammer($("#msgcon")[0]).on("swiperight", function() {rollMsgs('left');});
-}
-
 $('#colors span').on('click', function(){
     if(!socket.connected) notConnected();
     //log($(this).attr('class'));
@@ -296,7 +223,7 @@ $('#colors span').on('click', function(){
 })
 
 function notConnected(){
-    $.notify('Still connecting...', {style: 'mystyle'});
+    $.notify('still connecting...', {style: 'mystyle'});
 }
 
 
@@ -362,41 +289,12 @@ Object.keys(msgStyles).map(function(value){
 $(function(){
     var twPanelHide;
     var twPanelShow;
-
     $('.cornerbutton').on('click', showCornerbox);
-
     $('.closecornerbox').on('click', hideCornerbox);
-
     function showCornerbox(event){
-        // var el = $('.cornerbox');
         document.querySelector('.cornerbox').classList.add('active');
-        //if(twPanelHide)return;
-        // if(el.hasClass('active'))return;
-        // el.addClass('active').focus();
-        
-        //log('show');
-        // el.addClass('active').focus();
-        // twPanelShow = TweenMax.from(el.get(0), 0.5, {x:"+=100%", y:"-=100%", opacity:0, onComplete:function(){
-        //     TweenMax.set(el.get(0), {opacity:1});
-        //     twPanelShow=null;
-        // }});
     }
-
     function hideCornerbox(event){
         document.querySelector('.cornerbox').classList.remove('active');
-        // log('hide');
-        // var el = $('.cornerbox');
-        // if(el.hasClass('active')==false)return;
-        // el.removeClass('active'); // comment this out when using gsap
-
-        // twPanelHide = TweenMax.to(el.get(0), 0.5, {opacity:0, onComplete:function(){
-        //     el.removeClass('active');
-        //     TweenMax.set(el.get(0), {opacity:1});
-        //     twPanelHide=null;
-        // }});
     }
 });
-
-/////
-
-Draggable.create("#onlinestatcon", {type:"x,y", edgeResistance:0.65, bounds:"body", throwProps:true, cursor: 'grab', onRelease:function(){log(this.endX);}});
