@@ -20,6 +20,14 @@
 
             outline: 0px solid rgb(57, 123, 247);
         }
+        @media screen and (orientation:portrait) {
+            canvas{
+                width: 100vw;
+                height: calc(100vw / 0.777);
+                margin: auto;
+                margin-top: calc( (100vh - 100vw / 0.777)/2 );
+            }
+        }
     </style>
 </head>
 <body>
