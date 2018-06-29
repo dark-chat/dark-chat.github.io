@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        body{
+            overflow: hidden;
+            background-color: black;
+            margin: 0;
+            display: flex;
+        }
+        canvas{
+            /* image-rendering: pixelated; */
+            height: 98vh;
+            box-shadow: 0 0 0 whitesmoke;
+            margin: 1vh auto;
+
+            outline: 0px solid rgb(57, 123, 247);
+        }
+    </style>
+</head>
+<body>
+    <script src="pixi.min.js"></script>
+    <script src="bump.js"></script>
+    <script>
+        bump = new Bump(PIXI);
+        function valBetween(val, min, max) {
+            return (val > min) ? ((val < max) ? val : max) : min;
+        }
+    </script>
+    <script src="index.js" type="module"></script>
+</body>
+</html>
