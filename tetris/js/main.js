@@ -1,4 +1,5 @@
 // Todo: https://tetris.wiki/TGM_Rotation
+// Top score
 // Wall kicks, Show next piece, Hold, Grace period, particles, more effects
 // Support mobile
 // Show loading
@@ -16,8 +17,18 @@ const app = new PIXI.Application({
     }
 );
 
+const nextApp = new PIXI.Application({ 
+        width: 32,         // 224
+        height: 32,        // 288
+        antialias: false,    // default: false
+        transparent: false, // default: false
+        resolution: 5       // default: 1
+    }
+);
+
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 document.getElementById("game").appendChild(app.view);
+document.getElementById("next").appendChild(nextApp.view);
 
 import {tettex, tetromino} from './tetromino.js';
 
@@ -42,6 +53,8 @@ let field = [];
 const fieldSprites = [];
 let state = {
     currentPiece: rndPiece(), // 1 -> 7
+    nextPiece: rndPiece(),
+    _lastNextPiece: null,
     currentRotation: 0,
     currentX: fieldW / 2 - 2,
     currentY: 0,
@@ -59,6 +72,8 @@ let lines = [];
 let linesCounter = 0;
 let pieceCount = 0;
 
+let nextFieldSprites = [];
+
 for (let x = 0; x<fieldW; x++) for (let y = 0; y<fieldH; y++)
 {
     const i = getIndex(x, y);
@@ -71,6 +86,15 @@ for (let x = 0; x<fieldW; x++) for (let y = 0; y<fieldH; y++)
     fieldSprites[i].x = x * 8;
     fieldSprites[i].y = y * 8;
     app.stage.addChild(fieldSprites[i]);
+}
+
+for (let x = 0; x<8; x++) for (let y = 0; y<8; y++)
+{
+    const i = getIndex(x, y);
+    nextFieldSprites[i] = new PIXI.Sprite(tettex[0]);
+    nextFieldSprites[i].x = x * 8;
+    nextFieldSprites[i].y = y * 8;
+    nextApp.stage.addChild(nextFieldSprites[i]);
 }
 
 resources['GameStart'].sound.play();
@@ -207,8 +231,10 @@ app.ticker.add(function(dt){
                     else resources['SpecialLineClearDouble'].sound.play();
                 }
 
-                // chose next piece 
-                state.currentPiece = rndPiece();
+                // choose next piece 
+                state.currentPiece = state.nextPiece;
+                state.currentRotation = 0;
+                state.nextPiece = rndPiece();
                 state.currentX = fieldW / 2 - 2;
                 state.currentY = 0;
                 state.rotation = 0;
@@ -255,6 +281,19 @@ app.ticker.add(function(dt){
             state._lastgameOver = state.level;
             document.getElementById("level").innerText = state.level;
         }
+        
+        if(state._lastNextPiece!==state.nextPiece) {
+            state._lastNextPiece = state.nextPiece;
+            for (let px=0;px<4;px++) for (let py=0;py<4;py++) {
+                const i = getIndex(px, py);
+                if(tetromino[state.nextPiece][rotate(px, py, 0)]==="x") {
+                    nextFieldSprites[i].texture = tettex[state.nextPiece];
+                }else{
+                    nextFieldSprites[i].texture = tettex[0];
+                }
+            }
+        }
+
     }
 
 
@@ -306,6 +345,8 @@ function restartGame() {
     pieceCount = 0;
     state = {
         currentPiece: rndPiece(), // 1 -> 7
+        nextPiece: rndPiece(),
+        _lastNextPiece: null,
         currentRotation: 0,
         currentX: fieldW / 2 - 2,
         currentY: 0,
