@@ -1,0 +1,3 @@
+[submodule "tetris"]
+	path = tetris
+	url = https://github.com/idtareq/tetris
