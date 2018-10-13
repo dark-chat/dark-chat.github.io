@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Dark Chat</title>
+    <script>
+        var socketServer;
+        var webServer;
+        socketServer = "https://dcnew.herokuapp.com";
+        //socketServer = "ws://dcnew-idtareq.rhcloud.com:8000";
+        //webServer = "https://dcnew-idtareq.rhcloud.com";
+        //webServer = "https://app-7565237d-5888-47e8-94c8-7d5c152b8208.cleverapps.io";
+        //socketServer = "http://127.0.0.1";
+        webServer = socketServer;
+        fetch(webServer + '/init');
+    </script>
     <link rel="icon" href="favicon.ico">
     <link href='css/style.css' rel='stylesheet' type='text/css'>
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
@@ -31,55 +42,10 @@
                 <br>
         </div>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script>
-        // flowtype
-        !function(a){a.fn.flowtype=function(b){var c=a.extend({maximum:9999,minimum:1,maxFont:9999,minFont:1,fontRatio:35},b),d=function(b){var d=a(b),e=d.width(),f=e>c.maximum?c.maximum:e<c.minimum?c.minimum:e,g=f/c.fontRatio,h=g>c.maxFont?c.maxFont:g<c.minFont?c.minFont:g;d.css("font-size",h+"px")};return this.each(function(){var b=this;a(window).resize(function(){d(b)}),d(this)})}}(jQuery),$("body").flowtype({minimum:360,maximum:900,minFont:20,maxFont:40,fontRatio:25});
-        $('body,html').css('opacity','1');
-    </script>
     <script src="js/socket.io.slim.js"></script>
-    <script>
-        var socketServer; 
-        var webServer;
-        var initObj=null;
-        socketServer = "https://dcnew.herokuapp.com";
-        //socketServer = "ws://dcnew-idtareq.rhcloud.com:8000";
-        //webServer = "https://dcnew-idtareq.rhcloud.com";
-        //webServer = "https://app-7565237d-5888-47e8-94c8-7d5c152b8208.cleverapps.io";
-        //socketServer = "http://127.0.0.1";
-        webServer = socketServer;
-
-        function getInit(){
-            $.ajax({
-                type: "GET",
-                cache: false,
-                url: webServer + '/init',
-                success: function(msg) {
-                    initObj=msg;
-                },
-                fail: function(){
-                    setTimeout(getInit, 1000);
-                }
-            });
-        }
-        getInit();
-        
-        var socket = io.connect(socketServer, {'transports': ['websocket']});
-        //var socket = io.connect(socketServer);
-        var socket_got_connected = false;
-        socket.on('connect', function(msg){socket_got_connected=true; console.log('Got connected!');});
-        
-        $(document).ready(function() {
-            $('#inputbox').focus();
-        });
-
-        $('input,textarea').focus(function(){
-        $(this).data('placeholder',$(this).attr('placeholder'))
-                .attr('placeholder','');
-        }).blur(function(){
-        $(this).attr('placeholder',$(this).data('placeholder'));
-        });
-    </script>
+    <script src="js/app-preload.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/flowtype.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/notify.min.js"></script>
     <script src="js/SplitText.min.js"></script>

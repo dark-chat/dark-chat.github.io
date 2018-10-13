@@ -1,4 +1,4 @@
-//TODO: remove jquery, flexbox
+//TODO: remove jquery - use flexbox
 
 var log = console.log;
 $.notify.addStyle("mystyle",{html:"<span data-notify-text/>",classes:{base:{"white-space":"nowrap","background-color":"black",color:"white",padding:"5px","font-size":"0.63em"}}});
@@ -24,23 +24,15 @@ var blurred = false;
 var missedMessages = 0;
 var cachedMessage = '';
 
+function getInit() { socket.emit('init', {}); }
+
 setInterval(function(){
     if (socket_got_connected){
-        var initOptions;
-        if (typeof window.localStorage!=="undefined" && localStorage.getItem('init')!==null) {
-            initOptions = localStorage.getItem('init');
-        }else{
-            initOptions = '';
-        }
-        //socket.emit('init', initOptions);
-        socket.emit('init', initOptions);
+        // this runs once
         socket_got_connected=false;
         getInit();
     }
-    if(initObj!==null){
-        initApp(initObj);
-        initObj=null;
-    }
+    if(initObj!==null){ initApp(initObj); initObj=null; }
 },10);
 
 setInterval(function(){
@@ -56,11 +48,16 @@ setInterval(function(){
 
 /*  Socket Events */
 
+socket.on('initObj', function(obj){
+    initObj = obj;
+});
+
 socket.on('disconnect', function(){
     $('#onlinestat').addClass('animate-flicker');
     $('#onlinestat').text('reconnecting ...');
     receivedInit=false;
-    getInit();
+    // getInit();
+
 });
 
 socket.on('cmd',function(msg){ 
