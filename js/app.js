@@ -120,7 +120,7 @@ function displayMsg(msg, side){
         $('.newMsg_'+side).removeClass('newMsg_'+side);
         if(tweenNewMessages){
             // remove old message
-            TweenMax.to(els, 0.5, {opacity: 0, onComplete: ()=> {els.remove()}});
+            TweenMax.to(els, 0.2, {opacity: 0, onComplete: ()=> {els.remove()}});
         }
     }
     var el = $('<span>');
@@ -135,10 +135,10 @@ function displayMsg(msg, side){
     el.addClass("newMsg_"+side);
     if(tweenNewMessages && receivedInit){
         // TweenMax.from(el, 0.5, {x:"100%", ease:Power0.easeNone})
-        TweenMax.from(el, 0.5, {alpha:0, ease:Power0.easeNone})
+        TweenMax.from(el, 0.2, {alpha:0, ease:Power0.easeNone})
     } else if (tweenNewMessages) {
         TweenMax.set(el, {x:"0%"});
-        TweenMax.from(el, 0.5, {alpha:0, ease:Power0.easeNone})
+        TweenMax.from(el, 0.2, {alpha:0, ease:Power0.easeNone})
     } else {
         TweenMax.set(el, {x:"100%"});
     }
