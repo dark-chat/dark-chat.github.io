@@ -19,18 +19,24 @@
     <link href='css/style.css' rel='stylesheet' type='text/css'>
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet">
 </head>
 <body>
     <span id="onlinestatcon"><span id="onlinestat" class="animate-flicker">connecting...</span></span>
     <div id="up"><h1>Chat In The Dark!</h1></div>
-    <div id="msgcon"></div>
+    <div class="msgconparent" style="display: flex;">
+        <div id="msgcon_left" class="msgcon" style="text-align: right;"></div>
+        <div id="msgcon_right" class="msgcon" style="text-align: left;"></div>
+    </div>
     <div id="down">
         <div id="submitcon">
-            <form id="inputform" action="" method="post">
-                <input autocomplete="off" tabindex="1" id="inputbox" type="text" placeholder="Type here and press enter...">
+            <div id="inputcon">
                 <input type="submit" style="position: absolute;visibility: hidden;">
-            </form>
+                <div style="display:flex;">
+                    <form class="inputform" id="inputform_left"><input autocomplete="off" tabindex="1" id="inputbox" class="inputbox" type="text" placeholder="Type here and press enter..."></form>
+                    <form class="inputform" id="inputform_right"><input autocomplete="off" tabindex="1" id="inputbox2" class="inputbox" type="text" placeholder="Type here and press enter..."></form>
+                </div>
+            </div>
             <span id="timestat"></span>
         </div>
     </div>

@@ -22,7 +22,8 @@ var msgTime=0;
 var pulseInterval=0;
 var blurred = false;
 var missedMessages = 0;
-var cachedMessage = '';
+var cachedMessage_left = '';
+var cachedMessage_right = '';
 
 function getInit() { socket.emit('init', {}); }
 
@@ -103,47 +104,55 @@ function updateTimeago(){
     fillRstat(msgTime);
 }
 
-function displayData(msg){
-    if (isDefined(msg.msg) && isDefined(msg.msgTime) && msg.msg!=cachedMessage){
-        cachedMessage=msg.msg;
-        // $('.activeMsg').removeClass('activeMsg').addClass('leftMsg')
-        if($('.newMsg').length) {
-            // move away current message
-            var els = $('.newMsg');
-            $('.newMsg').removeClass('newMsg');
-            if(tweenNewMessages){
-                TweenMax.to(els, 0.5, {x:"-100%", ease:Power0.easeNone});
-            }
+function displayMsg(msg, side){
+    if(side=="left") cachedMessage_left=msg.msg_left;
+    if(side=="right") cachedMessage_right=msg.msg_right;
+
+    // $('.activeMsg').removeClass('activeMsg').addClass('leftMsg')
+    if($('.newMsg_'+side).length) {
+        // move away current message
+        var els = $('.newMsg_'+side);
+        $('.newMsg_'+side).removeClass('newMsg_'+side);
+        if(tweenNewMessages){
+            // remove old message
+            TweenMax.to(els, 0.5, {opacity: 0, onComplete: ()=> {els.remove()}});
         }
-        var el = $('<span>');
-        el.text(msg.msg);
-        if (isDefined(msg.msgColor)) {
-            el.addClass(msg.msgColor);
-            if (isDefined(msgStyles[msg.msgColor]) && msg.msg.length>1){
-                styleMsg(el, msgStyles[msg.msgColor]);
-            }
-        }
-        $('#msgcon').append(el);
-        el.addClass("newMsg");
-        if(tweenNewMessages && receivedInit){
-            TweenMax.from(el, 0.5, {x:"100%", ease:Power0.easeNone})
-        } else if (tweenNewMessages) {
-            TweenMax.set(el, {x:"0%"});
-            TweenMax.from(el, 0.5, {alpha:0, ease:Power0.easeNone})
-        } else {
-            TweenMax.set(el, {x:"100%"});
-        }
-        // setTimeout(function(){
-        //     el.addClass('activeMsg');
-        // },0);
-        
-        if (blurred || tweenNewMessages===false){
-            missedMessages++;
-            document.title = '('+missedMessages+') Dark Chat';
-        }
-        msgTime = msg.msgTime;
-        fillRstat(msg.msgTime);
     }
+    var el = $('<span>');
+    el.text(msg['msg_'+side]);
+    if (isDefined(msg['msgColor_'+side])) {
+        el.addClass(msg['msgColor_'+side]);
+        if (isDefined(msgStyles[msg['msgColor_'+side]]) && msg['msg_'+side].length>1){
+            styleMsg(el, msgStyles[msg['msgColor_'+side]]);
+        }
+    }
+    $('#msgcon_'+side).append(el);
+    el.addClass("newMsg_"+side);
+    if(tweenNewMessages && receivedInit){
+        // TweenMax.from(el, 0.5, {x:"100%", ease:Power0.easeNone})
+        TweenMax.from(el, 0.5, {alpha:0, ease:Power0.easeNone})
+    } else if (tweenNewMessages) {
+        TweenMax.set(el, {x:"0%"});
+        TweenMax.from(el, 0.5, {alpha:0, ease:Power0.easeNone})
+    } else {
+        TweenMax.set(el, {x:"100%"});
+    }
+    // setTimeout(function(){
+    //     el.addClass('activeMsg');
+    // },0);
+
+    if (blurred || tweenNewMessages===false){
+        missedMessages++;
+        document.title = '('+missedMessages+') Dark Chat';
+    }
+    msgTime = msg['msgTime_'+side];
+    fillRstat(msg['msgTime_'+side]);
+}
+
+function displayData(msg){
+    var side = "";
+    if(isDefined(msg.msg_left) && isDefined(msg.msgTime_left) && msg.msg_left!=cachedMessage_left) displayMsg(msg, "left");
+    if(isDefined(msg.msg_right) && isDefined(msg.msgTime_right) && msg.msg_right!=cachedMessage_right) displayMsg(msg, "right");
 
     var newStats = false;
     var onP=onlinePersonsCount;
@@ -183,16 +192,23 @@ function fillRstat(time){
     $('#rstat').text("Said "+hTime+" ago");
 }
 
-function postMsg(msg){
+function postMsg(el, side){
     if(!socket.connected) notConnected();
 
-    socket.emit('post',{'msg':msg});
-    $( "#inputbox" ).val('');
+    socket.emit('post',{[`msg_${side}`]:el.val()});
+    el.val('');
 }
 
-$( "#inputform" ).submit(function( event ) {
-    postMsg($( "#inputbox" ).val());
-    return false;
+$( "#inputform_left" ).submit(function( event ) {
+    event.preventDefault();
+    var el = $( "#inputbox" );
+    postMsg(el, 'left');
+});
+
+$( "#inputform_right" ).submit(function( event ) {
+    event.preventDefault();
+    var el = $( "#inputbox2" );
+    postMsg(el, 'right');
 });
 
 window.onblur = function() {
