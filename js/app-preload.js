@@ -16,3 +16,33 @@ inputBoxInputs.forEach(inputBoxInput => {
     });
 });
 // document.querySelector('#inputbox').focus();
+
+var player;
+var onYouTubeIframeAPIReady;
+
+function setUpYoutubePlayer(initialVideoId) {
+    var tag = document.createElement('script');
+    tag.id = 'iframe-demo';
+    tag.src = 'https://www.youtube.com/iframe_api';
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('player', {
+            height: '320',
+            width: '500',
+            playerVars: { autoplay: 1, controls: 0, loop: 1 },
+            // videoId: initialVideoId,
+            events: {
+                'onReady': (e)=> {playVid(initialVideoId)},
+                // 'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+}
+
+function playVid(id) {
+    if(!player.loadPlaylist) debugger;
+    player.loadPlaylist(id);
+    player.setLoop(true);
+}

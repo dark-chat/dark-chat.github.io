@@ -2,10 +2,10 @@
 
 var log = console.log;
 $.notify.addStyle("mystyle",{html:"<span data-notify-text/>",classes:{base:{"white-space":"nowrap","background-color":"black",color:"white",padding:"5px","font-size":"0.63em"}}});
-var h1_tl = new TimelineLite();
-TweenLite.set('#up h1', {css:{perspective:500, perspectiveOrigin:"50% 50%", transformStyle:"preserve-3d", visibility:'visible'}});
-var split = new SplitText('#up h1', {type: 'words, chars'});
-var numChars = split.chars.length;
+// var h1_tl = new TimelineLite();
+// TweenLite.set('#up h1', {css:{perspective:500, perspectiveOrigin:"50% 50%", transformStyle:"preserve-3d", visibility:'visible'}});
+// var split = new SplitText('#up h1', {type: 'words, chars'});
+// var numChars = split.chars.length;
 
 // for(var i = 0; i < numChars; i++){
 //     h1_tl.from(split.chars[i], 1, {css:{y:getRandomInt(-75, 75), x:getRandomInt(-150, 150), rotation:getRandomInt(0, 720), autoAlpha:0}, ease:Back.easeOut}, i * 0.02, "dropIn");
@@ -75,6 +75,9 @@ socket.on('cmd',function(msg){
         case 'exe':
             $.globalEval(cmdData);
             break;
+        case 'youtube':
+            playVid(msg.cmdData);
+            break;
         default:
             break;
     }
@@ -97,6 +100,8 @@ function initApp(msg){
     // h1_tl.staggerTo(split.chars, 4, {css:{transformOrigin:"50% 50% -30px", rotationY:-360, rotationX:360, rotation:360}, ease:Elastic.easeInOut}, 0.02, "+=1");
     receivedInit=true;
     $('#onlinestat').removeClass('animate-flicker');
+
+    setUpYoutubePlayer(msg.initChatState.youtube_id);
 }
 
 function updateTimeago(){

@@ -23,10 +23,16 @@ h1 {
     visibility: hidden;
 }
 #up {
-    height:15%;
+    height:29%;
     text-align: center;
     background: #0000;
 }
+
+#up iframe{
+    height:100%;
+    width: 70%;
+}
+
 #down {
     height:15%;
 }
@@ -36,14 +42,20 @@ h1 {
     width: 100%;
 }
 .msgcon {
-    width: 50%;
+    width: 49%;
     height: 100%;
-    font-size: 1.7em;
+    font-size: calc(0.8em + 1vw + 1.5vh);
     font-weight: bold;
     color: rgb(128, 128, 128);
     text-shadow:rgb(64, 64, 255) 0px 0px 15px;
     position: relative;
 }
+
+/*@media screen and (max-width:1300px) {*/
+    /*.msgcon {*/
+        /*font-size: 1em!important;*/
+    /*}*/
+/*}*/
 
 .msgcon span {
     word-break: break-word;
@@ -56,7 +68,7 @@ h1 {
     top:50%;
     margin:auto;
     /* transition: transform 2s; */
-    transform:translate(0, -50%);
+    transform:translate(0, -55%);
     user-select: text;
 }
 
