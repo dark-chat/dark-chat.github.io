@@ -29,8 +29,8 @@ function setUpYoutubePlayer(initialVideoId) {
 
     onYouTubeIframeAPIReady = function() {
         player = new YT.Player('player', {
-            height: '320',
-            width: '500',
+            // height: '320',
+            // width: '500',
             playerVars: { autoplay: 1, controls: 0, loop: 1 },
             // videoId: initialVideoId,
             events: {
