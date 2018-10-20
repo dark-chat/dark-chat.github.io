@@ -17,28 +17,40 @@ inputBoxInputs.forEach(inputBoxInput => {
 });
 // document.querySelector('#inputbox').focus();
 
-var player;
-var onYouTubeIframeAPIReady;
+var player = {play:function(){}};
+var initialVideoId;
 
-function setUpYoutubePlayer(initialVideoId) {
+function setUpYoutubePlayer(initialVideoId_) {
+    initialVideoId = initialVideoId_;
     var tag = document.createElement('script');
     tag.id = 'iframe-demo';
     tag.src = 'https://www.youtube.com/iframe_api';
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    document.head.appendChild(tag);
+}
 
-    onYouTubeIframeAPIReady = function() {
-        player = new YT.Player('player', {
-            // height: '320',
-            // width: '500',
-            playerVars: { autoplay: 1, controls: 0, loop: 1 },
-            // videoId: initialVideoId,
-            events: {
-                'onReady': (e)=> {playVid(initialVideoId)},
-                // 'onStateChange': onPlayerStateChange
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        // height: '320',
+        // width: '500',
+        playerVars: { autoplay: 1, controls: 1, loop: 1, enablejsapi: 1, rel: 0, autohide:1, modestbranding:1, mute:1 },
+        // videoId: initialVideoId,
+        events: {
+            onReady: function(e) {
+                playVid(initialVideoId);
+            },
+            onStateChange: function(e) {
+                console.log('Youtube player state changed: ', e);
+                if (e.data === YT.PlayerState.ENDED || e.data === YT.PlayerState.UNSTARTED) {
+                    player.playVideo();
+                }
+                if (e.data === YT.PlayerState.UNSTARTED) {
+                }
+            },
+            onError: function(e){
+                console.error('Youtube player error: ', e);
             }
-        });
-    }
+        }
+    });
 }
 
 function playVid(posted_msg) {
@@ -49,15 +61,6 @@ function playVid(posted_msg) {
     const yt_id = res_id[1];
     const yt_list = res_list==null?null:res_list[1];
 
-
-    player.setLoop(true);
-    player.loadPlaylist(yt_id);
-
-    // if(yt_list){
-    //     player.loadPlaylist({list: yt_list, listType:'search'});
-    // }else{
-    //     player.loadPlaylist(yt_id);
-    // }
-
-    player.setLoop(true);
+    // player.loadPlaylist(yt_id);
+    player.loadVideoById(res_id[1]);
 }
