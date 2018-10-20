@@ -42,7 +42,7 @@ function setUpYoutubePlayer(initialVideoId) {
 }
 
 function playVid(id) {
-    if(!player.loadPlaylist) debugger;
     player.setLoop(true);
     player.loadPlaylist(id);
+    player.setLoop(true);
 }
