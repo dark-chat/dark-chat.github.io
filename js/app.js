@@ -233,7 +233,7 @@ function isDefined(val) {
 var tweenNewMessages = true;
 var activeMsg=null;
 
-$('#colors span').on('click', function(){
+$('#colors div').on('click', function(){
     if(!socket.connected) notConnected();
     //log($(this).attr('class'));
     var chosenColor = $(this).attr('class');

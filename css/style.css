@@ -202,7 +202,7 @@ h1 {
     color:red;
     font-size: .7em!important;
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: .2em;
     cursor: pointer;
     opacity: .7;
@@ -294,13 +294,19 @@ h1 {
     text-shadow:0.0ex 0.0ex 0.4ex darkblue;
 }
 
-#colors span {
-    cursor: pointer;
-    padding-right: 0.3em;
-    opacity: 0.6;
+#colors {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-#colors span:hover {
+#colors div {
+    cursor: pointer;
+    padding-right: 0.3em;
+    opacity: 0.8;
+}
+
+#colors div:hover {
     opacity: 1;
 }
 

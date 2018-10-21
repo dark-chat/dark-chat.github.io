@@ -47,7 +47,7 @@ function onYouTubeIframeAPIReady() {
                 }
             },
             onError: function(e){
-                console.error('Youtube player error: ', e);
+                // console.error('Youtube player error: ', e);
             }
         }
     });
