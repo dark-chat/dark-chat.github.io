@@ -33,6 +33,7 @@ function setUpYoutubePlayer(initialVideoId_) {
 }
 
 function onYouTubeIframeAPIReady() {
+    console.log('onYouTubeIframeAPIReady');
     player = new YT.Player('player', {
         // height: '320',
         // width: '500',
@@ -58,6 +59,7 @@ function onYouTubeIframeAPIReady() {
 }
 
 function playVid(posted_msg) {
+    console.log('playVid');
     const rex_id = /(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\-_]+)/;
     const rex_playlist = /[&?]list=([^&]+)/i;
     const res_id = posted_msg.match(rex_id);
