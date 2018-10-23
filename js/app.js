@@ -61,6 +61,9 @@ socket.on('disconnect', function(){
 
 });
 
+socket.on('disconnect', function(){
+});
+
 socket.on('cmd',function(msg){ 
     let cmd = msg.cmd
     let cmdData = msg.cmdData
@@ -91,7 +94,8 @@ socket.on('updateState',function(msg){
 
 /* --------- */
 
-function initApp(msg){
+function initApp(msg){ // also reinit!
+    console.log('initApp');
     serverTime = parseInt(msg.time);
     activePersonsCount = msg.initChatState.activePersonsCount;
     onlinePersonsCount = msg.initChatState.onlinePersonsCount;
@@ -101,7 +105,8 @@ function initApp(msg){
     receivedInit=true;
     $('#onlinestat').removeClass('animate-flicker');
 
-    setUpYoutubePlayer(msg.initChatState.youtube_id);
+    if(!player) setUpYoutubePlayer(msg.initChatState.youtube_id);
+    else player.play(msg.initChatState.youtube_id);
 }
 
 function updateTimeago(){
