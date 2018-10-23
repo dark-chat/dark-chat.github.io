@@ -1,8 +1,11 @@
-var initObj=null;
+// var initObj=null;
 // var socket = io.connect(socketServer, {'transports': ['websocket']});
-var socket = io.connect(socketServer);
-var socket_got_connected = false;
-socket.on('connect', function(msg){socket_got_connected=true; console.log('Got connected!')});
+// var socket = io.connect(socketServer);
+// var socket_got_connected = false;
+// socket.on('connect', function(msg){
+    // socket_got_connected=true;
+    // console.log('Got connected!')
+// });
 
 var inputBoxInputs = document.querySelectorAll('.inputbox');
 inputBoxInputs.forEach(inputBoxInput => {

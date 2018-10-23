@@ -25,16 +25,18 @@ var missedMessages = 0;
 var cachedMessage_left = '';
 var cachedMessage_right = '';
 
-function getInit() { socket.emit('init', {}); }
+var socket = io.connect(socketServer);
 
-setInterval(function(){
-    if (socket_got_connected){
-        // this runs once
-        socket_got_connected=false;
-        getInit();
-    }
-    if(initObj!==null){ initApp(initObj); initObj=null; }
-},10);
+// function getInit() { socket.emit('init', {}); }
+
+// setInterval(function(){
+//     if (socket_got_connected){
+//         // this runs once
+//         socket_got_connected=false;
+//         // getInit();
+//     }
+//     // if(initObj!==null){ initApp(initObj); initObj=null; }
+// },10);
 
 setInterval(function(){
     if(serverTime===0)return;
@@ -50,7 +52,8 @@ setInterval(function(){
 /*  Socket Events */
 
 socket.on('initObj', function(obj){
-    initObj = obj;
+    // initObj = obj;
+    initApp(obj);
 });
 
 socket.on('disconnect', function(){
@@ -58,10 +61,14 @@ socket.on('disconnect', function(){
     $('#onlinestat').text('reconnecting ...');
     receivedInit=false;
     // getInit();
-
 });
 
-socket.on('disconnect', function(){
+socket.on('connect', function(){
+    socket.emit('init', {});
+});
+
+socket.on('reconnect', function(){
+    socket.emit('init', {});
 });
 
 socket.on('cmd',function(msg){ 
@@ -105,7 +112,6 @@ function initApp(msg){ // also reinit!
     receivedInit=true;
     $('#onlinestat').removeClass('animate-flicker');
 
-    debugger;
     if(!player) setUpYoutubePlayer(msg.initChatState.youtube_id);
     else playVid(msg.initChatState.youtube_id);
 }
