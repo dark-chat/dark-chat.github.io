@@ -68,10 +68,10 @@ socket.on('connect', function(){
     socket.emit('init', {});
 });
 
-socket.on('reconnect', function(){
-    console.log('reconnect');
-    socket.emit('init', {});
-});
+// socket.on('reconnect', function(){
+//     console.log('reconnect');
+//     socket.emit('init', {});
+// });
 
 socket.on('cmd',function(msg){ 
     let cmd = msg.cmd
