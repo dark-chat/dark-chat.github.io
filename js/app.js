@@ -64,10 +64,12 @@ socket.on('disconnect', function(){
 });
 
 socket.on('connect', function(){
+    console.log('connect');
     socket.emit('init', {});
 });
 
 socket.on('reconnect', function(){
+    console.log('reconnect');
     socket.emit('init', {});
 });
 

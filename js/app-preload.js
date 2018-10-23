@@ -24,6 +24,7 @@ var player = null;
 var initialVideoId;
 
 function setUpYoutubePlayer(initialVideoId_) {
+    console.log('setUpYoutubePlayer');
     initialVideoId = initialVideoId_;
     var tag = document.createElement('script');
     tag.id = 'iframe-demo';
