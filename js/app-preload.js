@@ -17,7 +17,7 @@ inputBoxInputs.forEach(inputBoxInput => {
 });
 // document.querySelector('#inputbox').focus();
 
-var player = {play:function(){}};
+var player = null;
 var initialVideoId;
 
 function setUpYoutubePlayer(initialVideoId_) {
@@ -39,7 +39,7 @@ function onYouTubeIframeAPIReady() {
                 playVid(initialVideoId);
             },
             onStateChange: function(e) {
-                console.log('Youtube player state changed: ', e);
+                // console.log('Youtube player state changed: ', e);
                 if (e.data === YT.PlayerState.ENDED || e.data === YT.PlayerState.UNSTARTED) {
                     player.playVideo();
                 }

@@ -105,8 +105,9 @@ function initApp(msg){ // also reinit!
     receivedInit=true;
     $('#onlinestat').removeClass('animate-flicker');
 
+    debugger;
     if(!player) setUpYoutubePlayer(msg.initChatState.youtube_id);
-    else player.play(msg.initChatState.youtube_id);
+    else playVid(msg.initChatState.youtube_id);
 }
 
 function updateTimeago(){
