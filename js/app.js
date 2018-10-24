@@ -74,8 +74,8 @@ socket.on('connect', function(){
 // });
 
 socket.on('cmd',function(msg){ 
-    let cmd = msg.cmd
-    let cmdData = msg.cmdData
+    let cmd = msg.cmd;
+    let cmdData = msg.cmdData;
     switch (cmd) {
         case 'rld':
             $.notify('Site has been updated. Refreshing in 3 seconds!!!', {style: 'mystyle'});
@@ -114,8 +114,10 @@ function initApp(msg){ // also reinit!
     receivedInit=true;
     $('#onlinestat').removeClass('animate-flicker');
 
-    if(!player) setUpYoutubePlayer(msg.initChatState.youtube_id);
-    else playVid(msg.initChatState.youtube_id);
+    const videoId=msg.initChatState.youtube_id;
+    if(!player) setUpYoutubePlayer(videoId);
+    else if(currentVideoId!==videoId) playVid(videoId);
+    currentVideoId=videoId;
 }
 
 function updateTimeago(){
@@ -169,39 +171,11 @@ function displayMsg(msg, side){
 }
 
 function displayData(msg){
-    var side = "";
     if(isDefined(msg.msg_left) && isDefined(msg.msgTime_left) && msg.msg_left!=cachedMessage_left) displayMsg(msg, "left");
     if(isDefined(msg.msg_right) && isDefined(msg.msgTime_right) && msg.msg_right!=cachedMessage_right) displayMsg(msg, "right");
 
-    var newStats = false;
-    var onP=onlinePersonsCount;
-    var acP=activePersonsCount;
-
-    if (isDefined(msg.onlinePersonsCount)){
-        onP = msg.onlinePersonsCount;
-        newStats = true;
-    }
-
     if (isDefined(msg.activePersonsCount)){
-        acP = msg.activePersonsCount;
-        newStats = true;
-    }
-
-    if(newStats){
-        // var is_are1 = onP<2?" person ":" people ";
-        var is_are1 = onP<2?" ":" ";
-        // var is_are2 = acP<2?" is ":" are ";
-        if(onP>0&&acP>0){
-            // $('#onlinestat').text( onP + is_are1 +"watching, of which "+acP+is_are2+"talking.");
-            // $('#onlinestat').text(onP + is_are1 +"online");
-            $('#onlinestat').text(onP + is_are1 +"");
-        }else if(onP>0) {
-            // $('#onlinestat').text(onP + is_are1 +"online");
-            $('#onlinestat').text(onP + is_are1 +"");
-        }
-        // else{
-        //     $('#onlinestat').text("Noone is here. ");
-        // }
+        $('#onlinestat').text(msg.activePersonsCount);
     }
 
 }

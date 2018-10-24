@@ -20,8 +20,9 @@ inputBoxInputs.forEach(inputBoxInput => {
 });
 // document.querySelector('#inputbox').focus();
 
-var player = null;
-var initialVideoId;
+var player=null;
+var initialVideoId=null;
+var currentVideoId=null;
 
 function setUpYoutubePlayer(initialVideoId_) {
     console.log('setUpYoutubePlayer');
