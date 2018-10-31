@@ -71,3 +71,13 @@ function playVid(posted_msg) {
     // player.loadPlaylist(yt_id);
     player.loadVideoById(res_id[1]);
 }
+
+function isDefined(val) {
+    return typeof val!=="undefined";
+}
+
+function getRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var log = console.log;

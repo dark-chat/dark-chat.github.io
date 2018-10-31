@@ -11,9 +11,9 @@
         //socketServer = "ws://dcnew-idtareq.rhcloud.com:8000";
         //webServer = "https://dcnew-idtareq.rhcloud.com";
         //webServer = "https://app-7565237d-5888-47e8-94c8-7d5c152b8208.cleverapps.io";
-        //socketServer = "http://127.0.0.1";
+        // socketServer = "http://127.0.0.1";
         webServer = socketServer;
-        fetch(webServer + '/init');
+        // fetch(webServer + '/init');
     </script>
     <link rel="icon" href="favicon.ico">
     <link href='css/style.css' rel='stylesheet' type='text/css'>
@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet">
 </head>
 <body>
-    <span id="onlinestatcon"><span id="onlinestat" class="animate-flicker">connecting...</span></span>
+    <span style="display: none;" id="onlinestatcon"><span id="onlinestat" class="animate-flicker">connecting...</span></span>
     <div id="up">
         <!--<iframe id="ytplayer" type="text/html" width="500" height="300"-->
          <!--src="https://www.youtube.com/embed/2TdySRdQHOo"-->
@@ -67,7 +67,7 @@
                 <br>
         </div>
     </div>
-    <script src="js/socket.io.slim.js"></script>
+    <!--<script src="js/socket.io.slim.js"></script>-->
     <script src="js/app-preload.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/flowtype.js"></script>
@@ -78,7 +78,11 @@
     <!-- <script src="js/ThrowPropsPlugin.min.js"></script> -->
     <script src="js/chroma.min.js"></script>
     <!-- <script src="js/jquery.mousewheel.min.js"></script> -->
-    <script src="js/app.js"></script>
+    <script src="js/app-ui.js"></script>
+    <!--<script src="js/app-socket.js"></script>-->
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script src="js/app-firebase.js"></script>
+    <script> ui_setup(); </script>
 </body>
 
 </html>
