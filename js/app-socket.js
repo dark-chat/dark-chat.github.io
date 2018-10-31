@@ -47,12 +47,16 @@ socket.on('updateState',function(msg){
     displayData(msg);
 });
 
-function isConnected(){
+function canPickColor(){
     return socket.connected;
 }
 
-function serverChangeUserColor(data){
-    socket.emit('color', data);
+function canPostMessage(){
+    return socket.connected;
+}
+
+function serverChangeUserColor(side, msg){
+    socket.emit('color', {[`msg_${side}`]: msg});
 }
 
 function serverPostMsg(data){

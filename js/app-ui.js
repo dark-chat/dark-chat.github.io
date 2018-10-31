@@ -79,7 +79,7 @@ function displayData(msg){
 }
 
 function notConnected(){
-    $.notify('still connecting...', {style: 'mystyle'});
+    $.notify('Please wait...', {style: 'mystyle'});
 }
 
 function ui_setup() {
@@ -106,7 +106,7 @@ function ui_setup() {
     });
 
     $('#colors div').on('click', function(){
-        if(!isConnected()) notConnected();
+        if(!canPickColor()) notConnected();
         //log($(this).attr('class'));
         var chosenColor = $(this).attr('class');
         serverChangeUserColor({"color":chosenColor});
@@ -217,14 +217,14 @@ function initApp(msg){ // also reinit!
 }
 
 function postMsg(el, side){
-    if(!isConnected()) notConnected();
-    serverPostMsg({[`msg_${side}`]:el.val()});
+    if(!canPostMessage()) notConnected();
+    serverPostMsg(side, el.val());
     el.val('');
 
 }
 
 function disconnected() {
-    $('#onlinestat').addClass('animate-flicker').text('reconnecting ...');
+    $('#onlinestat').addClass('animate-flicker').text('Please wait...');
     receivedInit=false;
     // getInit();
 }

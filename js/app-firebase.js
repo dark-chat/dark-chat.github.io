@@ -1,3 +1,5 @@
+var idToken=null;
+
 firebase.initializeApp({
     apiKey: 'AIzaSyAOHHwRFBRSIfbkLKHidO5gE-cJ1lQ3yWc',
     authDomain: 'dcnew-a525b.firebaseapp.com',
@@ -16,16 +18,8 @@ firebase.auth().signInAnonymously();
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        // User is signed in.
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        // ...
-        // console.log(user);
-    } else {
-        // User is signed out.
-        // ...
+        user.getIdToken().then(idToken_ => { idToken=idToken_; })
     }
-    // ...
 });
 
 var db_chat_state = db.collection("chat_state").doc('WKn5bqUOJSFPS9s0aR9X');
@@ -38,7 +32,26 @@ db_chat_state.onSnapshot((doc) => {
     initApp(initAppObj);
 });
 
+function canPickColor(){
+    return false;
+}
 
+function canPostMessage(){
+    return idToken!==null;
+}
 
+function serverChangeUserColor(data){
+}
+
+function serverPostMsg(side, msg){
+    fetch("https://us-central1-dcnew-a525b.cloudfunctions.net/postMessage", {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({side: side, msg: msg, idToken: idToken})
+    });
+}
 
 
