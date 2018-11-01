@@ -1,10 +1,15 @@
 var idToken=null;
 
-firebase.initializeApp({
-    apiKey: 'AIzaSyAOHHwRFBRSIfbkLKHidO5gE-cJ1lQ3yWc',
-    authDomain: 'dcnew-a525b.firebaseapp.com',
-    projectId: 'dcnew-a525b'
-});
+var config = {
+    apiKey: "AIzaSyAOHHwRFBRSIfbkLKHidO5gE-cJ1lQ3yWc",
+    authDomain: "dcnew-a525b.firebaseapp.com",
+    databaseURL: "https://dcnew-a525b.firebaseio.com",
+    projectId: "dcnew-a525b",
+    storageBucket: "dcnew-a525b.appspot.com",
+    messagingSenderId: "758378019603"
+};
+
+firebase.initializeApp(config);
 
 // Initialize Cloud Firestore through Firebase
 var db = firebase.firestore();
