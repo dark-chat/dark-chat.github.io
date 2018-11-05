@@ -49,14 +49,16 @@ function serverChangeUserColor(data){
 }
 
 function serverPostMsg(side, msg){
-    fetch("https://us-central1-dcnew-a525b.cloudfunctions.net/postMessage", {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({side: side, msg: msg, idToken: idToken})
-    });
+    firebase.auth().currentUser.getIdToken().then(function(idToken) {
+        fetch("https://us-central1-dcnew-a525b.cloudfunctions.net/postMessage", {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({side: side, msg: msg, idToken: idToken})
+        });
+    })
 }
 
 
