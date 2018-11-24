@@ -17,8 +17,8 @@ function OnUserUpdate(t) {
     display.set(state);
 
     for(var x=width-1;--x;) for(var y=height-1;--y;) {
-        const neighbores =  cell(x-1,y-1) + cell(x,y-1) + cell(x+1,y-1) + 
-                            cell(x-1,y) + 0             + cell(x+1,y) + 
+        const neighbores =  cell(x-1,y-1) + cell(x,y-1) + cell(x+1,y-1) +
+                            cell(x-1,y) + 0             + cell(x+1,y) +
                             cell(x-1,y+1) + cell(x,y+1) + cell(x+1,y+1);
 
         if( cell(x,y) && (neighbores>3 || neighbores<2) ) state[x+y*width]=0;
@@ -26,6 +26,6 @@ function OnUserUpdate(t) {
 
         if(cell(x,y)) Draw(x, y, 0, 0, 0, 255);
     }
-    
+
 }
 

@@ -1,9 +1,10 @@
 let FPS = 60;
 let canvas = document.querySelector("canvas");
 
-// keep width/height=1.777777777777778 or make the according changes in the canvas style
-export let width = 355.5555555555556;
-export let height = 200;
+let ratio = window.innerWidth/window.innerHeight;
+
+export let width = 320;
+export let height = ~~(width/ratio);
 
 const ctx = canvas.getContext("2d");
 const S = Math.sin;
