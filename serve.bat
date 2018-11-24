@@ -1,1 +1,1 @@
-python -m http.server 81
+http-server -p 81
