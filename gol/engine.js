@@ -1,8 +1,8 @@
 let FPS = 60;
 let canvas = document.querySelector("canvas");
 
-// keep width/height=2 or make the according changes in the canvas style
-export let width = 400;
+// keep width/height=1.777777777777778 or make the according changes in the canvas style
+export let width = 355.5555555555556;
 export let height = 200;
 
 const ctx = canvas.getContext("2d");
