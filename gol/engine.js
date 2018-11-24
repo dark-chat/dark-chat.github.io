@@ -1,10 +1,33 @@
-let FPS = 60;
-let canvas = document.querySelector("canvas");
+const log = x => console.log(x)
 
-let ratio = window.innerWidth/window.innerHeight;
+let FPS = 30
+let canvas = document.querySelector("canvas")
 
-export let width = 320;
-export let height = ~~(width/ratio);
+const calcRatio = () => window.innerWidth/window.innerHeight
+const calcHeight = () => ~~(width/calcRatio())
+
+let OnUserUpdate
+let OnStart
+
+let width
+let height
+export let screen
+let data32
+
+function restart() {
+    width = ~~(window.innerWidth/5)
+    height = ~~(window.innerHeight/5)
+
+    // width = ~~Math.max(320, window.innerWidth/3
+    // height = calcHeight()
+    // height = window.innerHeight
+
+    screen = createScreen()
+    data32 = createData32()
+
+    OnStart(width, height, screen)
+    requestAnimationFrame(loop)
+}
 
 const ctx = canvas.getContext("2d");
 const S = Math.sin;
@@ -15,9 +38,8 @@ const PI = Math.PI;
 let time = 0;
 let frame = 0;
 
-let OnUserUpdate;
-
 function loop() {
+    // console.log(height)
     // requestAnimationFrame(loop);
     setTimeout(function() {
         requestAnimationFrame(loop);
@@ -39,12 +61,13 @@ export function Draw(x, y, r, g, b, a) {
     data32[x + y * screen.width] = (a << 24) | (b << 16) | (g <<  8) | r;            
 }
 
-export let screen = ctx.createImageData(width, height);
+const createScreen = () =>  ctx.createImageData(width, height)
+const createData32 = () => new Uint32Array(screen.data.buffer)
 
-let data32 = new Uint32Array(screen.data.buffer);
-
-export function Start(_OnUserUpdate){
-    OnUserUpdate = _OnUserUpdate;
-    if(typeof OnUserUpdate==="function") requestAnimationFrame(loop); else console.error("OnUserUpdate is not set");
+export function Start(_OnStart, _OnUserUpdate){
+    OnStart = _OnStart
+    OnUserUpdate = _OnUserUpdate
+    restart()
+    if(typeof OnUserUpdate==="function") requestAnimationFrame(loop); else console.error("OnUserUpdate is not set")
+    window.addEventListener("resize", restart)
 }
-

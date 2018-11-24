@@ -1,20 +1,17 @@
-import {Draw, Start, screen, width, height, rnd} from "./engine.js";
+import {Draw, Start, rnd} from "./engine.js";
 
-Start(OnUserUpdate)
-
-var state = (new Uint8Array(width*height)).fill(0)
-var display = (new Uint8Array(width*height)).fill(0)
-
-for(var x=width;x--;) for(var y=height;y--;) {
-    state[x+y*width] = rnd()%2;
-}
+let state
+let display
+let width
+let height
+let screen
 
 function cell(x, y){return display[x+y*width];}
 
 function OnUserUpdate(t) {
-    screen.data.fill(255);
+    screen.data.fill(255)
 
-    display.set(state);
+    display.set(state)
 
     for(var x=width-1;--x;) for(var y=height-1;--y;) {
         const neighbores =  cell(x-1,y-1) + cell(x,y-1) + cell(x+1,y-1) +
@@ -29,3 +26,16 @@ function OnUserUpdate(t) {
 
 }
 
+const OnStart = (_width, _height, _screen) => {
+    width = _width
+    height = _height
+    screen = _screen
+    state = (new Uint8Array(width*height)).fill(0)
+    display = (new Uint8Array(width*height)).fill(0)
+
+    for(var x=width;x--;) for(var y=height;y--;) {
+        state[x+y*width] = rnd()%2;
+    }
+}
+
+Start(OnStart, OnUserUpdate)
