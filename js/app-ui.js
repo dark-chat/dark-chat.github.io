@@ -44,6 +44,11 @@ function displayMsg(msg, side){
             styleMsg(el, msgStyles[msg['msgColor_'+side]]);
         }
     }
+
+    //todo: remove below two lines
+    el.addClass('nimda');
+    styleMsg(el, msgStyles['nimda']);
+
     $('#msgcon_'+side).append(el);
     el.addClass("newMsg_"+side);
     if(tweenNewMessages && receivedInit){

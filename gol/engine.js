@@ -11,7 +11,7 @@ let OnStart
 
 let width
 let height
-export let screen
+let screen
 let data32
 
 function restart() {
