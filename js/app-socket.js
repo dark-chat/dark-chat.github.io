@@ -59,6 +59,6 @@ function serverChangeUserColor(side, msg){
     socket.emit('color', {[`msg_${side}`]: msg});
 }
 
-function serverPostMsg(data){
-    socket.emit('post', data);
+function serverPostMsg(side, msg){
+    socket.emit('post', {[`msg_${side}`]: msg});
 }
